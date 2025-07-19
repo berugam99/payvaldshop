@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Login & Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 320px;
+      text-align: center;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4facfe;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00c6ff;
+    }
+
+    #toggleBtn {
+      background: none;
+      border: none;
+      color: #0077cc;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: 10px;
+    }
+
+    #message {
+      margin-top: 12px;
+      font-weight: bold;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2 id="form-title">Login</h2>
+    <form id="mainForm" onsubmit="handleSubmit(event)">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Masuk</button>
+    </form>
+    <button id="toggleBtn" onclick="toggleForm()">Belum punya akun? Register</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("mainForm");
+    const formTitle = document.getElementById("form-title");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const message = document.getElementById("message");
+
+    let isLogin = true;
+
+    // Simulasi database login
+    const userDatabase = {
+      beri: "kopilot123",
+      guran: "gurann",
+      kop: "kop"
+    };
+
+    function toggleForm() {
+      isLogin = !isLogin;
+      formTitle.textContent = isLogin ? "Login" : "Register";
+      message.textContent = "";
+      toggleBtn.textContent = isLogin ? "Belum punya akun? Register" : "Sudah punya akun? Login";
+
+      form.innerHTML = isLogin
+        ? `<input type="text" id="username" placeholder="Username" required />
+           <input type="password" id="password" placeholder="Password" required />
+           <button type="submit">Masuk</button>`
+        : `<input type="text" id="newuser" placeholder="Username Baru" required />
+           <input type="email" id="newemail" placeholder="Email" required />
+           <input type="password" id="newpass" placeholder="Password" required />
+           <button type="submit">Daftar</button>`;
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      message.style.color = "red";
+
+      if (isLogin) {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (userDatabase[username] && userDatabase[username] === password) {
+          message.style.color = "green";
+          message.textContent = `Selamat datang, ${username}! Login berhasil.`;
+        } else {
+          message.textContent = "Username atau password salah.";
+        }
+      } else {
+        const newuser = document.getElementById("newuser").value;
+        const newemail = document.getElementById("newemail").value;
+        const newpass = document.getElementById("newpass").value;
+
+        if (userDatabase[newuser]) {
+          message.textContent = "Username sudah terdaftar!";
+        } else {
+          userDatabase[newuser] = newpass;
+          message.style.color = "green";
+          message.textContent = `Registrasi sukses untuk ${newuser}. Silakan login.`;
+          toggleForm();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
