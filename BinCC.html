@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>XDREAM BINING</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="shortcut icon" type="image/png" href="">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <style>
+     :root{--primary-dark:#0a0a0f;--secondary-dark:#121218;--card-bg:#16161e;--accent-color:#2a5a8c;--accent-light:#3a6fa3;--text-light:#c5d1e0;--text-secondary:#8a9db3;--success:#2c6e49;--danger:#9e2a2b;--warning:#b08d57;--info:#3a6ea5;--secondary:#4a4a55;--border-radius:8px;--box-shadow:0 4px 20px rgba(0,0,0,.3);--main-border-color:rgba(42,90,140,.2);--scrollbar-thumb-color:var(--accent-color);--scrollbar-track-color:var(--secondary-dark);--scrollbar-thumb-hover-color:var(--accent-light)}*{margin:0;padding:0;box-sizing:border-box}body{background:var(--primary-dark);color:var(--text-light);font-family:'JetBrains Mono',monospace;padding:1.5rem;line-height:1.6;position:relative;overflow-x:hidden;transition:background-color .3s ease,color .3s ease}.network-lines,.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-2}.network-lines{z-index:-1;opacity:.07}.particles{opacity:.5}.particle{position:absolute;width:3px;height:3px;background:var(--accent-color);border-radius:50%;opacity:.3;animation:softPulse 3s infinite ease-in-out}.node{position:absolute;width:4px;height:4px;background:var(--accent-color);border-radius:50%;opacity:.3}.snake{position:absolute;height:2px;background:linear-gradient(90deg,transparent,var(--accent-color),transparent);opacity:.1;animation:snakeMove 15s infinite linear}@keyframes snakeMove{0%,100%{transform:translateY(0) scaleX(.8)}50%{transform:translateY(30px) scaleX(1.2)}}.pulse-box{position:absolute;width:40px;height:40px;border:1px solid var(--accent-color);opacity:.1;animation:pulseBox 10s infinite ease-in-out}@keyframes pulseBox{0%,100%{transform:scale(1) rotate(0deg);opacity:.05}50%{transform:scale(1.5) rotate(45deg);opacity:.1}}@keyframes softPulse{0%,100%{opacity:.7}50%{opacity:1}} .container{max-width:1140px;margin:0 auto;position:relative;z-index:1} .card{background:var(--card-bg);border:1px solid var(--main-border-color);border-radius:var(--border-radius);box-shadow:var(--box-shadow);overflow:hidden;margin-bottom:2rem;position:relative;transition:background-color .3s ease,border-color .3s ease}.card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent-color);transition:background-color .3s ease}.card-header{background:rgba(from var(--accent-color) r g b / .1);border-bottom:1px solid var(--main-border-color);padding:1.5rem;position:relative;transition:background-color .3s ease,border-color .3s ease}.card-body{padding:1.5rem}h3, h4{font-weight:700;margin-bottom:1rem;color:var(--accent-light);display:flex;align-items:center;gap:.75rem;transition:color .3s ease}h3 i, h4 i{color:var(--accent-light);transition:color .3s ease}h5{font-weight:bold;color:var(--text-light);margin-bottom:1rem;transition:color .3s ease}h5 i{color:var(--accent-light);margin-right:.5rem}p{color:var(--text-secondary);margin-bottom:1.5rem;transition:color .3s ease}strong{color:var(--text-light);font-weight:500;transition:color .3s ease}label{color:var(--text-light);font-weight:500;margin-bottom:.5rem;transition:color .3s ease;display:block}label i{margin-right:.5rem;color:var(--accent-light);transition:color .3s ease}hr{border-color:var(--main-border-color);margin-top:1.5rem;margin-bottom:1.5rem}.nav-tabs{background:rgba(from var(--accent-color) r g b / .1);border:none;border-radius:var(--border-radius) var(--border-radius) 0 0;padding:.5rem .5rem 0;display:flex;gap:.5rem;transition:background-color .3s ease;overflow-x:auto;flex-wrap:nowrap}.nav-tabs .nav-link{color:var(--text-secondary);border:none;border-radius:var(--border-radius) var(--border-radius) 0 0;padding:.75rem 1.5rem;transition:all .3s ease;font-weight:500;position:relative;overflow:hidden;z-index:1;white-space:nowrap}.nav-tabs .nav-link::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:var(--accent-color);opacity:0;transition:opacity .3s ease,background-color .3s ease;z-index:-1}.nav-tabs .nav-link:hover{color:var(--text-light)}.nav-tabs .nav-link:hover::before{opacity:.1}.nav-tabs .nav-link.active{background:var(--card-bg);color:var(--accent-light);border-bottom:none}.nav-tabs .nav-link.active::before{opacity:0}.nav-tabs .nav-link i{margin-right:.5rem}.tab-content{background:var(--card-bg);padding:1.5rem;border-radius:0 0 var(--border-radius) var(--border-radius);transition:background-color .3s ease;border:1px solid var(--main-border-color);border-top:none}textarea,.form-control,select{background:var(--secondary-dark);color:var(--text-light);border:1px solid var(--main-border-color);border-radius:var(--border-radius);padding:.75rem 1rem;resize:none;transition:all .3s ease;font-family:'JetBrains Mono',monospace;font-size:.9rem;width:100%}textarea:focus,.form-control:focus,select:focus{border-color:var(--accent-color);box-shadow:0 0 0 .2rem rgba(from var(--accent-color) r g b / .15);outline:none;background:var(--secondary-dark);color:var(--text-light)}select option{background:var(--secondary-dark);color:var(--text-light)}textarea::placeholder,.form-control::placeholder{color:var(--text-secondary);opacity:.6} textarea#input-list { min-height: 250px; } textarea[rows="1"]{line-height:1.5;height:calc(1.5em + 1.5rem + 2px);padding-top:.75rem;padding-bottom:.75rem} select.form-control { height: auto !important; } .btn{font-family:'JetBrains Mono',monospace;font-weight:500;padding:.75rem 1.5rem;border-radius:var(--border-radius);transition:all .3s ease;position:relative;overflow:hidden;z-index:1;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid transparent;background:var(--secondary-dark);color:var(--text-light);box-shadow:none}.btn::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.05);transform:translateX(-100%);transition:transform .3s ease;z-index:-1}.btn:hover::before{transform:translateX(0)}.btn::after{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:var(--border-radius);background:transparent;border:1px solid transparent;opacity:0;z-index:-2;transition:all .3s ease}.btn:hover::after{opacity:1}.btn-primary{border-color:var(--accent-color)}.btn-primary:hover::after{border-color:var(--accent-color);box-shadow:0 0 10px rgba(from var(--accent-color) r g b / .4)}.btn-success{border-color:var(--success)}.btn-success:hover::after{border-color:var(--success);box-shadow:0 0 10px rgba(from var(--success) r g b / .4)}.btn-danger{border-color:var(--danger);color:var(--text-light)}.btn-danger:hover::after{border-color:var(--danger);box-shadow:0 0 10px rgba(from var(--danger) r g b / .4)}.btn-warning{border-color:var(--warning);color:#212529}.btn-warning:hover::after{border-color:var(--warning);box-shadow:0 0 10px rgba(from var(--warning) r g b / .4)}.btn-info{border-color:var(--info)}.btn-info:hover::after{border-color:var(--info);box-shadow:0 0 10px rgba(from var(--info) r g b / .4)}.btn-secondary{border-color:var(--secondary)}.btn-secondary:hover::after{border-color:var(--secondary);box-shadow:0 0 10px rgba(from var(--secondary) r g b / .4)}.btn:active{box-shadow:inset 0 3px 5px rgba(0,0,0,.125)}.btn-danger:active{background-color:#252530;border-color:var(--danger);color:var(--text-light)}.buttons{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem;margin-bottom:1.5rem;justify-content:center}.status-bar{display:flex;gap:1rem; flex-wrap:wrap; margin:1rem 0 1.5rem;background:rgba(from var(--accent-color) r g b / .05);padding:1rem;border-radius:var(--border-radius);border:1px solid var(--main-border-color);transition:background-color .3s ease,border-color .3s ease; font-size: 0.9rem;} .status-item{display:flex;align-items:center;gap:.5rem}.status-item i{font-size:1rem;transition:color .3s ease; width: 1.1em; text-align: center;} .status-item.approved i{color:var(--success)}.status-item.declined i{color:var(--danger)}.status-item.errors i{color:var(--warning)}.status-item.tested i{color:var(--info)}.status-item.total i{color:var(--accent-light)} .result-box{background-color: #18181f; border-color: #333; max-height:350px;overflow-y:auto;padding:1rem;border-radius:var(--border-radius);font-size:.9rem;line-height:1.8;margin-top:1rem;transition:background-color .3s ease,border-color .3s ease} .result-box span.badge{margin-right:.5rem}.badge{padding:.5rem 1rem;border-radius:50px;font-weight:500;font-size:.85rem;line-height:1}.badge-success{background:var(--success);color:#fff}.badge-danger{background:var(--danger);color:#fff}.badge-warning{background:var(--warning);color:#212529}.badge-info{background:var(--info);color:#fff}.badge-secondary{background:var(--secondary);color:var(--text-light)}#toast-container>.toast{background-image:none!important;padding:15px 15px 15px 50px;width:350px;border-radius:var(--border-radius);box-shadow:var(--box-shadow);opacity:1!important;font-family:'JetBrains Mono',monospace}#toast-container>.toast:before{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-family:'Font Awesome 6 Free';font-weight:900;font-size:24px}#toast-container>.toast-success{background:var(--success)}#toast-container>.toast-success:before{content:'\f00c'}#toast-container>.toast-error{background:var(--danger)}#toast-container>.toast-error:before{content:'\f00d'}#toast-container>.toast-info{background:var(--info)}#toast-container>.toast-info:before{content:'\f129'}#toast-container>.toast-warning{background:var(--warning);color:#212529!important}#toast-container>.toast-warning:before{content:'\f071';color:#212529!important}.toast-message{color:#fff!important;font-weight:500;text-shadow:0 1px 2px rgba(0,0,0,.2)}#toast-container>.toast-warning .toast-message{color:#212529!important}@keyframes liveFlash{0%,100%{background-color:rgba(from var(--success) r g b / 0)}50%{background-color:rgba(from var(--success) r g b / .2)}}.live-flash{animation:liveFlash 1s ease-out}.footer{text-align:center;margin-top:3rem;padding:1.5rem;background:rgba(from var(--accent-color) r g b / .05);border-radius:var(--border-radius);border:1px solid var(--main-border-color);transition:background-color .3s ease,border-color .3s ease}.footer p{margin-bottom:.5rem;color:var(--text-secondary);transition:color .3s ease}.footer a{color:var(--accent-light);text-decoration:none;transition:all .3s ease}.footer a:hover{color:var(--text-light)}.theme-switch-wrapper{display:flex;align-items:center;position:absolute;top:1rem;right:1.5rem;z-index:10}.theme-switch{display:inline-block;height:24px;position:relative;width:50px;margin-left:8px;cursor:pointer}.theme-switch input{display:none}.slider{background-color:var(--secondary);bottom:0;left:0;position:absolute;right:0;top:0;transition:.4s}.slider:before{background-color:var(--primary-dark);bottom:2px;content:"";height:20px;left:2px;position:absolute;transition:.4s;width:20px}input:checked + .slider{background-color:var(--accent-light)}input:checked + .slider:before{transform:translateX(26px);background-color:#f4f7f9}.slider.round{border-radius:24px}.slider.round:before{border-radius:50%}.slider .sun-icon,.slider .moon-icon{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;color:#f0c44d;transition:opacity .3s ease}.slider .sun-icon{left:4px;opacity:0}.slider .moon-icon{right:4px;opacity:1;color:var(--text-light)}input:checked + .slider .sun-icon{opacity:1}input:checked + .slider .moon-icon{opacity:0}body.light-mode{--primary-dark:#f4f7f9;--secondary-dark:#ffffff;--card-bg:#ffffff;--accent-color:#0056b3;--accent-light:#007bff;--text-light:#212529;--text-secondary:#6c757d;--success:#28a745;--danger:#dc3545;--warning:#ffc107;--info:#17a2b8;--secondary:#e9ecef;--box-shadow:0 4px 20px rgba(0,0,0,.08);--main-border-color:transparent;--scrollbar-thumb-color:#ffffff;--scrollbar-track-color:#f1f1f1;--scrollbar-thumb-hover-color:#e9ecef}body.light-mode .card{border:none}body.light-mode .card-header{background:rgba(0,123,255,.03);border-bottom:none}body.light-mode .nav-tabs{background:rgba(0,123,255,.03)}body.light-mode .nav-tabs .nav-link{color:var(--text-secondary)}body.light-mode .nav-tabs .nav-link:hover::before{opacity:.05;background-color:var(--accent-color)}body.light-mode .nav-tabs .nav-link.active{background:var(--card-bg);color:var(--accent-light)}body.light-mode textarea,body.light-mode .form-control,body.light-mode select{background:#ffffff;color:var(--text-light);border:1px solid #e9ecef}body.light-mode textarea:focus,body.light-mode .form-control:focus,body.light-mode select:focus{border-color:var(--accent-light);box-shadow:0 0 0 .2rem rgba(0,123,255,.15);background:#ffffff}body.light-mode select option{background:#ffffff;color:#212529}body.light-mode .btn{background:#f8f9fa;color:#212529;border:1px solid #dee2e6}body.light-mode .btn:hover::before{background:rgba(0,0,0,.03)}body.light-mode .btn:hover{border-color:#adb5bd}body.light-mode .btn-primary{border-color:var(--accent-color)} body.light-mode .btn-success{border-color:var(--success)} body.light-mode .btn-danger{border-color:var(--danger)} body.light-mode .btn-warning{border-color:var(--warning);color:#212529} body.light-mode .btn-info{border-color:var(--info)} body.light-mode .btn-secondary{border-color:#adb5bd}body.light-mode .btn::after{box-shadow:0 0 10px rgba(0,0,0,.1)}body.light-mode .btn-primary:hover::after{box-shadow:0 0 10px rgba(0,123,255,.3)} body.light-mode .btn-success:hover::after{box-shadow:0 0 10px rgba(40,167,69,.3)} body.light-mode .btn-danger:hover::after{box-shadow:0 0 10px rgba(220,53,69,.3)} body.light-mode .btn-warning:hover::after{box-shadow:0 0 10px rgba(255,193,7,.3);color:#212529} body.light-mode .btn-info:hover::after{box-shadow:0 0 10px rgba(23,162,184,.3)} body.light-mode .btn-secondary:hover::after{box-shadow:0 0 10px rgba(108,117,125,.3)}body.light-mode .btn:active{background-color:#d9dde1;box-shadow:inset 0 3px 5px rgba(0,0,0,.125)}body.light-mode .btn-danger:active{background-color:#d32f2f;border-color:#bd2130;color:#ffffff}body.light-mode .status-bar{background:rgba(0,123,255,.02);border:none} body.light-mode .result-box{background-color:#f8f9fa; border-color: #eee;} body.light-mode .badge-success, body.light-mode .badge-danger, body.light-mode .badge-info, body.light-mode .badge-secondary{color:#ffffff !important}body.light-mode .badge-warning{color:#212529 !important}body.light-mode #toast-container>.toast-success{background:var(--success)} body.light-mode #toast-container>.toast-error{background:var(--danger)} body.light-mode #toast-container>.toast-info{background:var(--info)} body.light-mode #toast-container>.toast-warning{background:var(--warning);color:#212529!important}body.light-mode .toast-message{color:white !important}body.light-mode #toast-container>.toast-warning .toast-message{color:#212529 !important}body.light-mode .network-lines{opacity:.15} body.light-mode .particles{opacity:.5} body.light-mode .particle{background:var(--accent-light);opacity:.6} body.light-mode .node{background:var(--accent-light);opacity:.5} body.light-mode .snake{background:linear-gradient(90deg,transparent,var(--accent-light),transparent);opacity:.2} body.light-mode .pulse-box{border-color:var(--accent-light);opacity:.2}body.light-mode .footer{background:rgba(0,123,255,.02);border:none}.btn:disabled{opacity:.75;cursor:not-allowed;pointer-events:none}.btn:disabled::before{display:none!important}.btn:disabled:hover::after{opacity:0!important}.form-control:disabled,textarea:disabled,select:disabled{background-color:var(--secondary-dark);border-color:var(--secondary);color:var(--text-secondary);opacity:.7;cursor:not-allowed;box-shadow:none!important;-webkit-text-fill-color:var(--text-secondary)}.form-control:disabled option,select:disabled option{color:var(--text-secondary)}body.light-mode .form-control:disabled,body.light-mode textarea:disabled,body.light-mode select:disabled{background-color:#e9ecef;border-color:transparent;color:#6c757d;opacity:.75;-webkit-text-fill-color:#6c757d}body.light-mode .form-control:disabled option,body.light-mode select:disabled option{color:#6c757d}@media (max-width:768px){body{padding:1rem}.buttons{flex-direction:column}.nav-tabs{flex-wrap:nowrap;overflow-x:auto;padding:.5rem}.nav-tabs .nav-link{padding:.5rem 1rem;white-space:nowrap}.status-bar{flex-direction:column;gap:.75rem}} .gate-selection { margin-bottom: 1rem; } .gate-selection label { display: block; margin-bottom: .75rem; color: var(--text-light); font-weight: 500; } .gate-selection label i { margin-right: .5rem; color: var(--accent-light); } .input-group-text{background-color:var(--secondary-dark);border:1px solid var(--main-border-color);border-right:none;color:var(--text-secondary);border-radius:var(--border-radius) 0 0 var(--border-radius);transition:background-color .3s ease,border-color .3s ease;width:45px;justify-content:center}.input-group-text i,.input-group-text img{font-size:1.2em;color:var(--accent-light);transition:color .3s ease; max-height: 20px; width: auto;}.input-group>.form-control:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0}body.light-mode .input-group-text{background-color:#e9ecef;border:1px solid transparent;border-right:none}body.light-mode .input-group-text i, body.light-mode .input-group-text img{color:var(--accent-light)}.form-control.is-valid-input{border-color:var(--success)!important;color:var(--success)!important}.form-control.is-invalid-input{border-color:var(--danger)!important;color:var(--danger)!important}.form-control.is-valid-input::placeholder,.form-control.is-invalid-input::placeholder{color:var(--text-secondary);opacity:.6}body.light-mode .form-control.is-valid-input{border-color:var(--success)!important;color:var(--success)!important}body.light-mode .form-control.is-invalid-input{border-color:var(--danger)!important;color:var(--danger)!important}body.light-mode .form-control.is-valid-input::placeholder,body.light-mode .form-control.is-invalid-input::placeholder{color:#6c757d}.conditional-inputs textarea, .conditional-inputs input[type="text"] {min-height:calc(1.5em + 1.5rem + 2px)} select#month,select#year{font-size:1rem;} .result-box::-webkit-scrollbar,.tab-pane::-webkit-scrollbar,.nav-tabs::-webkit-scrollbar,textarea::-webkit-scrollbar{width:8px;height:8px}.result-box::-webkit-scrollbar-track,.tab-pane::-webkit-scrollbar-track,.nav-tabs::-webkit-scrollbar-track,textarea::-webkit-scrollbar-track{background:var(--scrollbar-track-color);border-radius:4px}.result-box::-webkit-scrollbar-thumb,.tab-pane::-webkit-scrollbar-thumb,.nav-tabs::-webkit-scrollbar-thumb,textarea::-webkit-scrollbar-thumb{background-color:var(--scrollbar-thumb-color);border-radius:4px;border:1px solid var(--scrollbar-track-color)}.result-box::-webkit-scrollbar-thumb:hover,.tab-pane::-webkit-scrollbar-thumb:hover,.nav-tabs::-webkit-scrollbar-thumb:hover,textarea::-webkit-scrollbar-thumb:hover{background-color:var(--scrollbar-thumb-hover-color)}.result-box,.tab-pane,.nav-tabs,textarea{scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb-color) var(--scrollbar-track-color)}.result-box { word-break: break-all; } .venex-stats h5 { font-size: 0.9rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; } .venex-stats h5 i { margin-right: 0.5rem;} .venex-stats .badge { font-size: 0.85rem; } .result-actions { margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; } .result-actions h5 { margin-bottom: 0; } .result-actions .btn-group { display: inline-flex; gap: 0.3rem; } .result-actions .btn { padding: 0.25rem 0.5rem; font-size: 0.8rem; } .main-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--main-border-color); margin-bottom: 1.5rem; } .main-header h4 { margin-bottom: 0; } .main-header .btn { margin-top: 0; } .badge-light { background-color: var(--secondary); color: var(--text-secondary); } body.light-mode .badge-light { background-color: #e9ecef; color: #6c757d;} .generator-footer { display: flex; justify-content: space-between; align-items: center; } .result-actions .btn-trash { background-color: #555 !important; border-color: #444 !important; color: #fff !important; } .result-actions .btn-copy-approved { background-color: #2c6e49 !important; border-color: #1e7e34 !important; color: #fff !important; } .result-actions .btn-copy-live { background-color: #ffc92a !important; border-color: #d39e00 !important; color: #212529 !important; } body.light-mode .result-actions .btn-copy-live { color: #212529 !important; } #heroku_api_key_group .input-group-append .btn { padding-top: 0.75rem; padding-bottom: 0.75rem; line-height: 1.5; height: calc(1.5em + 1.5rem + 2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-header">
+            <h4><strong><i class="fas fa-bolt"></i>XDREAM BINING</strong></h4>
+            <div>
+                <div class="theme-switch-wrapper" style="position: static; display: inline-flex; margin-left: 1rem;">
+                    <label class="theme-switch" for="theme-checkbox" title="TOGGLE LIGHT/DARK THEME">
+                        <input type="checkbox" id="theme-checkbox" >
+                        <div class="slider round">
+                            <span class="sun-icon"><i class="fas fa-sun"></i></span>
+                            <span class="moon-icon"><i class="fas fa-moon"></i></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0"><i class="fas fa-cogs"></i> CREDIT CARD GENERATOR</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="bin"><i class="fas fa-id-card"></i> BIN PATTERN (USE ; TO SEPARATE MULTIPLE BINS)</label>
+                                <textarea rows="1" class="form-control" style="text-transform: uppercase;" id="bin" placeholder="E.G., 400010XXXXXX; 515462XXXXXX"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="gencvv"><i class="fas fa-key"></i> SPECIFIC CVV (OPTIONAL)</label>
+                                <textarea rows="1" class="form-control" id="gencvv" placeholder="LEAVE BLANK FOR RANDOM"></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="genqty"><i class="fas fa-hashtag"></i> TOTAL QUANTITY</label>
+                                <textarea rows="1" class="form-control" id="genqty" placeholder="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="month"><i class="fas fa-calendar-alt"></i> EXPIRY MONTH</label>
+                                <select name="month" id="month" class="form-control">
+                                    <option value="Random">RANDOM MONTH</option>
+                                    <option value="01">01 - JAN</option>
+                                    <option value="02">02 - FEB</option>
+                                    <option value="03">03 - MAR</option>
+                                    <option value="04">04 - APR</option>
+                                    <option value="05">05 - MAY</option>
+                                    <option value="06">06 - JUN</option>
+                                    <option value="07">07 - JUL</option>
+                                    <option value="08">08 - AUG</option>
+                                    <option value="09">09 - SEP</option>
+                                    <option value="10">10 - OCT</option>
+                                    <option value="11">11 - NOV</option>
+                                    <option value="12">12 - DEC</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="year"><i class="fas fa-calendar-day"></i> EXPIRY YEAR</label>
+                                <select name="year" id="year" class="form-control">
+                                    <option value="Random">RANDOM YEAR</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                    <option value="2030">2030</option>
+                                    <option value="2031">2031</option>
+                                    <option value="2032">2032</option>
+                                    <option value="2033">2033</option>
+                                    <option value="2034">2034</option>
+                                    <option value="2035">2035</option>
+                                    <option value="2036">2036</option>
+                                    <option value="2037">2037</option>
+                                    <option value="2038">2038</option>
+                                    <option value="2039">2039</option>
+                                    <option value="2040">2040</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row mt-2 generator-footer">
+                            <div class="col-6">
+                                <button id="copyGenBtn" class="btn btn-info btn-block"><i class="fas fa-copy"></i> COPY LIST</button>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <button id="generateBtn" class="btn btn-success btn-block"><i class="fas fa-rocket"></i> GENERATE</button>
+                                <span class="badge badge-light cardlist ml-2" title="Cards in List below">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0"><i class="fas fa-tasks"></i> CARD CHECKER</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group gate-selection">
+                            <label for="gate"><i class="fas fa-door-open"></i> SELECT PAYMENT GATE</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img id="paymentIcon" src="https://cdn.iconscout.com/icon/free/png-512/free-paypal-logo-icon-download-in-svg-png-gif-file-formats--bitcoin-payment-social-media-pack-logos-icons-5582514.png?f=webp&w=512" alt="Gate Icon"></span>
+                                </div>
+                                <select name="gate" id="gate" class="form-control">
+                                    <option value="Auto.php">AUTO WOOCOMMERCE</option>
+                                    <option value="Shopify.php">SHOPIFY AUTO 1$</option>
+                                    <option value="AmazonUS.php">AMAZON UNITED STATES</option>
+                                    <option value="Adyen.php">ADYEN 1$</option> 
+                                    <option value="Paypal.php">PAYPAL AUTH 0.1$</option>
+                                    <option value="Heroku.php">HERUKO STRIPE 1$</option>
+                                    <option value="Vbv.php">VBV LOOKUP</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row conditional-inputs">
+                            <div class="form-group col-md-6 conditional-group" id="proxy_input_group" style="display: none;">
+                                <label for="proxy_input"><i class="fas fa-server"></i> PROXIES (FORMAT: IP:PORT & IP:PORT:USER:PASS)</label>
+                                <textarea rows="3" class="form-control" id="proxy_input" placeholder="e.g., 123.123.123.123:8080:username:password"></textarea>
+                            </div>
+                            <div class="form-group col-md-6 conditional-group" id="proxy_type_group" style="display: none;">
+                                <label for="proxy_type"><i class="fas fa-network-wired"></i> PROXY TYPE</label>
+                                <select name="proxy_type" id="proxy_type" class="form-control">
+                                    <option value="http">HTTP</option>
+                                    <option value="socks4">SOCKS4</option>
+                                    <option value="socks5">SOCKS5</option>
+                                </select>
+                            </div>
+                             <div class="form-group col-12 conditional-group" id="shopify_link_group" style="display: none;">
+                                <label for="shopify_product_link"><i class="fab fa-shopify"></i> SHOPIFY PRODUCT LINKS (1.00$, ONE PER LINE)</label>
+                                <textarea rows="3" class="form-control" id="shopify_product_link" placeholder="PASTE SHOPIFY PRODUCT LINKS HERE (E.G., https://store.com/products/your-product)"></textarea>
+                            </div>
+                            <div class="form-group col-12 conditional-group" id="manual_cookie_group" style="display: none;">
+                                <label for="manual_cookie"><i class="fab fa-wordpress"></i> WOOCOMMERCE COOKIE (B3/STRIPE/SQUARE/PAYFLOW/AUTH.NET)</label>
+                                <textarea rows="1" class="form-control" id="manual_cookie" placeholder="PUT COOKIE SITE WOO B3 & STRIPE WOO"></textarea>
+                            </div>
+                            <div class="form-group col-12 conditional-group" id="amazon_us_cookie_group" style="display: none;">
+                                <label for="amazon_us_cookie"><i class="fab fa-amazon"></i> AMAZON US COOKIE</label>
+                                <textarea rows="1" class="form-control" id="amazon_us_cookie" placeholder="PUT AMAZON US COOKIE HERE"></textarea>
+                            </div>
+                            <div class="form-group col-12 conditional-group" id="link_site_group" style="display: none;">
+                                <label for="link_site"><i class="fas fa-link"></i> WOOCOMMERCE SITE LINK (PAYMENT METHODS PAGE)</label>
+                                <textarea rows="1" class="form-control" id="link_site" placeholder="PUT LINK MY-ACCOUNT/PAYMENT-METHODS/"></textarea>
+                            </div>
+                            <div class="form-group col-12 conditional-group" id="heroku_api_key_group" style="display: none;">
+                                <label for="heroku_api_key"><i class="fas fa-key"></i> HEROKU API KEY (MUST CONTAIN "HRKU")</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="heroku_api_key" placeholder="PASTE HEROKU API KEY HERE (E.G., HRKU-XXXX-XXXX)">
+                                    <div class="input-group-append">
+                                        <a href="https://dashboard.heroku.com/account" target="_blank" rel="noopener noreferrer" class="btn btn-success" title="GO TO HEROKU ACCOUNT TO GET API Key"><i class="fas fa-external-link-alt"></i> GET KEY</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <div class="form-group">
+                            <label for="input-list"><i class="fas fa-clipboard-list"></i> CARD LIST (PASTE CARDS HERE TO CHECK)</label>
+                            <textarea class="form-control" id="input-list" placeholder="PASTE YOUR CARDS HERE TO CHECK. (FORMAT: XXXXXXXXXXXXXXXX|MM|YYYY|CVV)"></textarea>
+                        </div>
+
+                        <div class="buttons">
+                            <button class="btn btn-success" id="btn-start"><i class="fas fa-play"></i> START CHECKING</button>
+                            <button class="btn btn-danger" id="btn-stop" disabled><i class="fas fa-stop"></i> STOP</button>
+                            <button class="btn btn-secondary" id="btn-clean-all"><i class="fas fa-trash-alt"></i> CLEAR RESULTS</button>
+                        </div>
+                        <div class="mt-2 mb-1 text-center">
+                            <span class="badge badge-secondary" id="checker-status"><i class="fas fa-hourglass-start"></i> WAITING TO START...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <ul class="nav nav-tabs" id="resultTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="https://wizvenex.com/#tab-approved"><i class="fas fa-check-circle text-success"></i> APPROVED <span class="badge badge-success ml-1 approved">0</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="https://wizvenex.com/#tab-live"><i class="fas fa-bolt text-warning"></i> LIVE <span class="badge badge-warning ml-1 a
+                                
+                            provadas">0</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="https://wizvenex.com/#tab-declined"><i class="fas fa-times-circle text-danger"></i> DECLINED <span class="badge badge-danger ml-1 reprovadas">0</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="resultTabsContent">
+                        <div class="tab-pane fade show active" id="tab-approved">
+                            <div class="result-actions">
+                                <h5 class="mb-0"><i class="fas fa-check-circle text-success"></i> APPROVED RESULTS</h5>
+                                <div class="btn-group">
+                                    <button title="Copy List" class="btn btn-sm btn-copy-approved"><i class="fas fa-copy"></i> COPY</button>
+                                </div>
+                            </div>
+                            <p class="text-secondary small">TOTAL APPROVED: <span class="approved">0</span></p>
+                            <div id="lista_approved" class="result-box"></div>
+                        </div>
+                        <div class="tab-pane fade" id="tab-live">
+                            <div class="result-actions">
+                                <h5 class="mb-0"><i class="fas fa-bolt text-warning"></i> LIVE RESULTS</h5>
+                                <div class="btn-group">
+                                    <button title="Copy List" class="btn btn-sm btn-copy-live"><i class="fas fa-copy"></i> COPY</button>
+                                </div>
+                            </div>
+                            <p class="text-secondary small">TOTAL LIVE: <span class="aprovadas">0</span></p>
+                            <div id="lista_aprovadas" class="result-box"></div>
+                        </div>
+                        <div class="tab-pane fade" id="tab-declined">
+                            <div class="result-actions">
+                                <h5 class="mb-0"><i class="fas fa-times-circle text-danger"></i> DECLINED / ERRORS</h5>
+                                <div class="btn-group">
+                                    <button title="Clear List" class="btn btn-sm btn-trash"><i class="fas fa-trash"></i> CLEAR</button>
+                                </div>
+                            </div>
+                            <p class="text-secondary small">TOTAL DECLINED/ERRORS: <span class="reprovadas">0</span></p>
+                            <div id="lista_reprovadas" class="result-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Developed By <a href="https://t.me/imbussy">xdream</a>, Designed By <a href="https://t.me/xdream">xdream</a><br>and Concept by <a href="https://t.me/imbussy">xdream binner</a></p>        </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        // Theme Switcher Logic (unchanged)
+        const themeCheckbox = document.getElementById('theme-checkbox');
+        const currentTheme = localStorage.getItem('theme');
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-mode');
+                if (themeCheckbox) themeCheckbox.checked = true;
+            } else {
+                document.body.classList.remove('light-mode');
+                if (themeCheckbox) themeCheckbox.checked = false;
+            }
+        }
+        if (currentTheme) { applyTheme(currentTheme); }
+        if (themeCheckbox) {
+            themeCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // --- Global Variables & Settings ---
+        var audio = new Audio('live.mp3');
+        var successSound = new Audio('approved.mp3');
+        var maxThreads = 1; // Adjust as needed, higher values may cause issues
+        var activeThreads = 0;
+        var processingQueue = [];
+        var stopped = true;
+        var totalItems = 0;
+        var testedItems = 0;
+        var approvedItems = 0;
+        var liveResultItems = 0;
+        var declinedItems = 0; // Renamed from errorItems for clarity with UI
+        var currentTimeout = 90000; // 90 seconds timeout
+        var maxRetries = 3;
+        var retryDelay = 2500; // milliseconds
+        var checkDelay = 100; // milliseconds delay between checks when queue is processing
+
+        // Toastr Configuration
+        toastr.options = {
+            "closeButton": true, "debug": false, "newestOnTop": true, "progressBar": true,
+            "positionClass": "toast-top-right", "preventDuplicates": false, "onclick": null,
+            "showDuration": "300", "hideDuration": "1000", "timeOut": "5000",
+            "extendedTimeOut": "1000", "showEasing": "swing", "hideEasing": "linear",
+            "showMethod": "fadeIn", "hideMethod": "fadeOut"
+        };
+
+        // Placeholder for network effects if needed later
+        function createNetworkEffects() { /* Add background effects if desired */ }
+        document.addEventListener('DOMContentLoaded', createNetworkEffects);
+
+        // --- UI Update Functions ---
+        function updateStats() {
+            $(".carregadas").text(totalItems); // Assuming .carregadas exists elsewhere or remove if not used
+            $(".approved").text(approvedItems);
+            $(".aprovadas").text(liveResultItems); // Maps to LIVE tab
+            $(".reprovadas").text(declinedItems); // Maps to DECLINED tab
+            $(".testadas").text(testedItems); // Assuming .testadas exists elsewhere or remove if not used
+            updateCardListCount(); // Update the counter next to the generate button
+        }
+
+        function updateCardListCount() {
+            const inputList = document.getElementById('input-list');
+            if (inputList) {
+                const lines = inputList.value.split('\n').filter(line => line.trim() !== "");
+                $('.cardlist').text(lines.length);
+            } else {
+                $('.cardlist').text(0);
+            }
+        }
+
+        function removeLineFromTextarea(itemToRemove) {
+            const textarea = $("#input-list");
+            if (!textarea.length) return;
+            let currentList = textarea.val();
+            // Use a regex that accounts for potential variations in line endings and whitespace
+            const regex = new RegExp('^' + itemToRemove.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\s*(\\r?\\n|$)', 'm');
+            const newList = currentList.replace(regex, '');
+            textarea.val(newList.trim());
+            updateCardListCount(); // Update counter after removing line
+        }
+
+        // --- Core Checker Logic ---
+        function processQueue() {
+            if (stopped) return;
+
+            while (activeThreads < maxThreads && processingQueue.length > 0) {
+                activeThreads++;
+                checkItem(processingQueue.shift(), maxRetries);
+            }
+
+            // Check if processing is complete
+            if (processingQueue.length === 0 && activeThreads === 0 && !stopped) {
+                $("#checker-status").attr("class", "badge badge-success").html('<i class="fas fa-check"></i> PROCESSING COMPLETE!');
+                toastr.success(`Finished checking ${totalItems} cards.`);
+                // Re-enable buttons and inputs
+                $("#btn-start").prop("disabled", false);
+                $("#btn-stop").prop("disabled", true);
+                $("#input-list, #bin, #gencvv, #genqty, #month, #year, #generateBtn, #copyGenBtn, #gate, #manual_cookie, #amazon_us_cookie, #link_site, #heroku_api_key, #shopify_product_link, #proxy_input, #proxy_type").prop("disabled", false);
+                stopped = true; // Mark as stopped naturally
+            }
+        }
+
+        function checkItem(currentItem, retriesLeft) {
+            if (!currentItem || stopped) {
+                if (activeThreads > 0) activeThreads--;
+                setTimeout(processQueue, 50); // Small delay before checking queue again
+                return;
+            }
+
+            // Update status based on whether it's the first attempt or a retry
+            if (retriesLeft === maxRetries) {
+                 testedItems++;
+                 updateStats();
+                $("#checker-status").attr("class", "badge badge-info").html(`<i class="fas fa-sync fa-spin"></i> CHECKING: ${currentItem.substring(0, 12)}...`);
+            } else {
+                 $("#checker-status").attr("class", "badge badge-warning").html(`<i class="fas fa-redo fa-spin"></i> RETRYING (${maxRetries - retriesLeft + 1}/${maxRetries}): ${currentItem.substring(0, 12)}...`);
+            }
+
+
+            let gateUrl = null;
+            let gateCookieManual = "";
+            let gateCookieAmazon = "";
+            let gateLink = "";
+            let gateApiKeyHeroku = "";
+            let gateShopifyLinks = ""; // Initialize here
+            let gateProxies = "";
+            let proxyType = "";
+
+            const gateElement = document.getElementById('gate');
+            if (gateElement) {
+                gateUrl = gateElement.value;
+
+                // --- **MODIFIED**: Get data based on gate, don't get shopify links for Adyen ---
+                if (gateUrl === "Auto.php") {
+                    gateCookieManual = $("#manual_cookie").val().trim();
+                    gateLink = $("#link_site").val().trim();
+                } else if (gateUrl === "AmazonUS.php") {
+                    gateCookieAmazon = $("#amazon_us_cookie").val().trim();
+                } else if (gateUrl === "Heroku.php") {
+                    gateApiKeyHeroku = $("#heroku_api_key").val().trim();
+                } else if (gateUrl === "Shopify.php") { // Only Shopify needs links
+                    gateShopifyLinks = $("#shopify_product_link").val().trim();
+                    gateProxies = $("#proxy_input").val().trim();
+                    proxyType = $("#proxy_type").val();
+                } else if (gateUrl === "Adyen.php") { // Adyen only needs proxies
+                     gateProxies = $("#proxy_input").val().trim();
+                    proxyType = $("#proxy_type").val();
+                    // No shopify links needed for Adyen
+                }
+                // Other gates might not need extra inputs
+            } else {
+                console.error("ERROR: No payment gate selected for item:", currentItem);
+                toastr.error(`No gate selected for item ${currentItem}. Cannot proceed.`, "ERROR");
+                declinedItems++;
+                $("#lista_reprovadas").append(`<span class="badge badge-danger mr-1">ERROR</span> ${currentItem} - NO GATE SELECTED<BR>`);
+                removeLineFromTextarea(currentItem);
+                updateStats();
+                if (activeThreads > 0) activeThreads--;
+                setTimeout(processQueue, checkDelay);
+                return;
+            }
+
+            // --- Build request data, only include relevant fields ---
+            const requestData = {
+                lista: currentItem,
+                ...(gateCookieManual && { manual_cookie: gateCookieManual }),
+                ...(gateCookieAmazon && { amazon_us_cookie: gateCookieAmazon }),
+                ...(gateLink && { link_site: gateLink }),
+                ...(gateApiKeyHeroku && { api_key: gateApiKeyHeroku }),
+                ...(gateShopifyLinks && { shopify_links: gateShopifyLinks }), // Only included if gateShopifyLinks has a value
+                ...(gateProxies && { proxies: gateProxies }),
+                ...(proxyType && { proxy_type: proxyType }),
+            };
+
+            const handleSuccess = (responseText) => {
+                 try {
+                     if (stopped) return; // Don't process if stopped during request
+                     const responseLower = responseText ? responseText.toLowerCase() : "";
+
+                     // More robust check for approved/live status
+                     if (responseLower.includes("approved") || responseLower.includes("aprovada") || responseLower.includes("success") || responseLower.includes("succeeded")) {
+                         approvedItems++;
+                         // Add flash effect
+                         const newItem = $(`<span class="badge badge-success mr-1">APPROVED</span> ${currentItem} - ${responseText}<br>`);
+                         $("#lista_approved").append(newItem);
+                         newItem.addClass("live-flash");
+                         setTimeout(() => { newItem.removeClass("live-flash"); }, 1000);
+                         successSound.play().catch(() => {}); // Play sound, ignore errors if blocked
+                     } else if (responseLower.includes("live")) { // Check for "live" specifically if different from approved
+                         liveResultItems++;
+                         $("#lista_aprovadas").append(`<span class="badge badge-warning mr-1">LIVE</span> ${currentItem} - ${responseText}<br>`);
+                          audio.play().catch(() => {}); // Play sound, ignore errors if blocked (using 'audio' variable)
+                     } else {
+                         declinedItems++;
+                         $("#lista_reprovadas").append(`<span class="badge badge-danger mr-1">DECLINED</span> ${currentItem} - ${responseText}<br>`);
+                     }
+                 } catch(err) {
+                    console.error("Error processing response:", err);
+                    declinedItems++; // Count as declined if response parsing fails
+                    $("#lista_reprovadas").append(`<span class="badge badge-danger mr-1">ERROR</span> ${currentItem} - RESPONSE PARSE FAILED<br>`);
+                 } finally {
+                     if (!stopped) {
+                         removeLineFromTextarea(currentItem);
+                         updateStats();
+                         if (activeThreads > 0) activeThreads--;
+                         setTimeout(processQueue, checkDelay); // Process next item after delay
+                     }
+                 }
+            };
+
+            const handleFailure = (jqXHR, textStatus, errorThrown) => {
+                if (stopped) return; // Don't process if stopped
+
+                // Retry on timeout if retries are left
+                if (textStatus === 'timeout' && retriesLeft > 0) {
+                    console.warn(`Request timeout for ${currentItem}. Retrying (${maxRetries - retriesLeft + 1}/${maxRetries}) after ${retryDelay}ms...`);
+                    toastr.warning(`Timeout for ${currentItem.substring(0,12)}... Retrying (${maxRetries - retriesLeft + 1}/${maxRetries})...`, "RETRYING");
+                    setTimeout(() => {
+                        checkItem(currentItem, retriesLeft - 1); // Retry the same item
+                    }, retryDelay);
+                    return; // Don't decrement activeThreads yet, retry will handle it
+                }
+
+                // Handle final failure (no retries left or other error)
+                declinedItems++;
+                let errorMsg = `Request Error: ${textStatus || errorThrown || 'Unknown'}`;
+                 if(textStatus === 'timeout' && retriesLeft === 0) {
+                    errorMsg = "PROXY/REQUEST TIMEOUT";
+                    toastr.error(`${currentItem.substring(0,12)}... - PROXY/REQUEST TIMEOUT`, "REQUEST FAILED");
+                     $("#lista_reprovadas").append(`<span class="badge badge-danger mr-1">DEAD</span> ${currentItem} - ${errorMsg}<BR>`);
+                 } else {
+                     console.error(`Final request failed for ${currentItem}: ${textStatus} - ${errorThrown || 'No further details'}`);
+                     $("#lista_reprovadas").append(`<span class="badge badge-danger mr-1">DECLINED</span> ${currentItem} - ${errorMsg}<br>`);
+                 }
+
+
+                if (!stopped) {
+                    removeLineFromTextarea(currentItem);
+                    updateStats();
+                    if (activeThreads > 0) activeThreads--;
+                    setTimeout(processQueue, checkDelay);
+                }
+            };
+
+            // Make the AJAX request
+            $.ajax({
+                url: gateUrl, // Use the selected gate URL
+                type: 'GET',
+                data: requestData,
+                timeout: currentTimeout
+            })
+            .done(handleSuccess)
+            .fail(handleFailure);
+        }
+
+
+        // --- Luhn Algorithm Check ---
+        function isValidLuhn(ccNum) {
+            let sum = 0;
+            let doubleUp = false;
+            for (let i = ccNum.length - 1; i >= 0; i--) {
+                let curDigit = parseInt(ccNum.charAt(i));
+                if (doubleUp) {
+                    curDigit *= 2;
+                    if (curDigit > 9) curDigit -= 9;
+                }
+                sum += curDigit;
+                doubleUp = !doubleUp;
+            }
+            return (sum % 10) == 0;
+        }
+
+        // --- Card Detail Detection (Basic) ---
+        function getCardDetails(ccNum) {
+            if ((ccNum.startsWith('34') || ccNum.startsWith('37') || /^3[0-9]5/.test(ccNum)) && ccNum.length === 15) {
+                return { type: 'AMEX', length: 15, cvcLength: 4 };
+            } else if (ccNum.startsWith('4') && ccNum.length === 16) {
+                return { type: 'Visa', length: 16, cvcLength: 3 };
+            } else if ((/^5[1-5]/.test(ccNum) || ccNum.startsWith('22') || ccNum.startsWith('23') || ccNum.startsWith('24') || ccNum.startsWith('25') || ccNum.startsWith('26') || ccNum.startsWith('28')) && ccNum.length === 16) {
+                return { type: 'Mastercard', length: 16, cvcLength: 3 };
+            } else if (ccNum.startsWith('6') && ccNum.length === 16) { // Basic Discover check
+                return { type: 'Discover', length: 16, cvcLength: 3 };
+            } else if ((ccNum.startsWith('50') || ccNum.startsWith('56') || ccNum.startsWith('57') || ccNum.startsWith('58')) && ccNum.length === 16) { // Basic Maestro check
+                return { type: 'Maestro', length: 16, cvcLength: 3 };
+            } else if ((ccNum.startsWith('38') || ccNum.startsWith('39') || ccNum.startsWith('36')) && ccNum.length === 16) { // Basic Diners check
+                 return { type: 'Diners', length: 16, cvcLength: 3 };
+            } else if (ccNum.startsWith('35') && ccNum.length === 16) { // Basic JCB check
+                return { type: 'JCB', length: 16, cvcLength: 3 };
+            }
+            return null; // Unknown type or invalid length
+        }
+
+
+        // --- Input List Formatting ---
+        function extractValidCCFormat(inputText) {
+            const lines = inputText.split('\n').filter(line => line.trim() !== "");
+            const uniqueCards = new Set();
+            const validStartDigits = ['2', '3', '4', '5', '6'];
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1; // JS months are 0-indexed
+
+            lines.forEach(line => {
+                // 1. Clean the line: remove non-digits except for common separators, then replace separators with space
+                let cleanedLine = line.replace(/[^0-9\s|\/-]/g, '').replace(/[|\/-]/g, ' ').trim();
+                 // Remove extra whitespace
+                cleanedLine = cleanedLine.replace(/\s+/g, ' ');
+
+                const parts = cleanedLine.split(' ');
+                if (parts.length < 3) return; // Need at least Card, Month, Year
+
+                let cardNumber = "";
+                let month = "";
+                let year = "";
+                let cvv = "";
+
+                // Find the card number (15 or 16 digits)
+                const potentialCC = parts.find(part => /^\d{15,16}$/.test(part));
+                 if (!potentialCC || !validStartDigits.includes(potentialCC.charAt(0))) return;
+
+                const cardDetails = getCardDetails(potentialCC);
+                if (!cardDetails || !isValidLuhn(potentialCC)) return;
+                cardNumber = potentialCC;
+
+                 // Find Month (1 or 2 digits, 1-12) and Year (2 or 4 digits)
+                 let monthIndex = -1, yearIndex = -1;
+                 for(let i=0; i< parts.length; i++) {
+                     if (parts[i] === cardNumber) continue; // Skip the card number itself
+
+                     // Check for Month
+                     if (monthIndex === -1 && /^(0?[1-9]|1[0-2])$/.test(parts[i])) {
+                         month = parts[i].padStart(2, '0');
+                         monthIndex = i;
+                         continue; // Found month, move to next part
+                     }
+                     // Check for Year (allow YY or YYYY)
+                      if (yearIndex === -1 && /^(2[5-9]|[3-4]\d)$/.test(parts[i])) { // YY format (e.g., 25-40)
+                         year = "20" + parts[i];
+                         yearIndex = i;
+                         continue;
+                      } else if (yearIndex === -1 && /^(20(2[5-9]|3\d|40))$/.test(parts[i])) { // YYYY format (e.g., 2025-2040)
+                          year = parts[i];
+                         yearIndex = i;
+                         continue;
+                     }
+                 }
+
+                if (!month || !year) return; // Month or Year not found/valid
+
+                // Validate expiration date
+                const expYear = parseInt(year);
+                const expMonth = parseInt(month);
+                 if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+                     return; // Card expired
+                 }
+
+                // Find CVV (3 or 4 digits based on card type)
+                 const cvvLength = cardDetails.type === 'AMEX' ? 4 : 3;
+                 const cvvRegex = new RegExp(`^\\d{${cvvLength}}$`);
+                 const potentialCvv = parts.find((part, index) => index !== monthIndex && index !== yearIndex && part !== cardNumber && cvvRegex.test(part));
+                 if (potentialCvv) {
+                    cvv = potentialCvv;
+                 }
+
+
+                let formattedCard = `${cardNumber}|${month}|${year}`;
+                if (cvv) {
+                    formattedCard += `|${cvv}`;
+                }
+                uniqueCards.add(formattedCard);
+            });
+
+            return Array.from(uniqueCards).join('\n') || "NO VALID CARDS FOUND."; // Return formatted list or message
+        }
+
+
+        // --- Card Generation Functions ---
+        function generateCard(pattern) {
+            const isAmexLike = pattern.startsWith('34') || pattern.startsWith('37') || /^3[0-9]5/.test(pattern);
+            const targetLength = isAmexLike ? 15 : 16;
+            let prefix = '';
+
+            // Extract fixed prefix part
+            for (let i = 0; i < pattern.length; i++) {
+                if (pattern[i].toLowerCase() !== 'x' && prefix.length < (targetLength - 1) ) {
+                     prefix += pattern[i];
+                } else if (pattern[i].toLowerCase() === 'x' || prefix.length >= (targetLength - 1)) {
+                     break; // Stop if 'x' is encountered or prefix is long enough
+                }
+            }
+             // Ensure prefix isn't too long (edge case)
+             if (prefix.length >= targetLength) {
+                 prefix = prefix.substring(0, targetLength - 1);
+             }
+
+            let attempts = 0;
+            const maxAttempts = 20; // Prevent infinite loops for bad patterns
+
+             while(attempts < maxAttempts) {
+                 let generatedCardBase = prefix;
+                 const randomDigitsNeeded = targetLength - 1 - prefix.length;
+
+                 if (randomDigitsNeeded < 0) {
+                      console.error("Pattern prefix is too long for target length:", pattern, targetLength);
+                      return null; // Should not happen with check above, but safety first
+                 }
+
+                 // Fill random digits
+                 for (let i = 0; i < randomDigitsNeeded; i++) {
+                     generatedCardBase += Math.floor(Math.random() * 10);
+                 }
+
+                // Calculate Luhn check digit
+                let sum = 0;
+                let shouldDouble = true; // Start doubling from the rightmost digit *before* the check digit
+                for (let i = generatedCardBase.length - 1; i >= 0; i--) {
+                    let digit = parseInt(generatedCardBase[i], 10);
+                    if (shouldDouble) {
+                        digit *= 2;
+                        if (digit > 9) {
+                            digit -= 9;
+                        }
+                    }
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                const checkDigit = (sum * 9) % 10; // Simplified calculation for check digit
+                const generatedCard = generatedCardBase + checkDigit;
+
+                // Validate generated card: length, Luhn, and ensure it still matches the original fixed part
+                const originalPatternFixedPartRegex = new RegExp('^' + prefix); // Check against original fixed part
+                if (generatedCard.length === targetLength && isValidLuhn(generatedCard) && originalPatternFixedPartRegex.test(generatedCard)) {
+                    return generatedCard;
+                }
+                attempts++;
+            }
+             console.error("Failed to generate valid card for pattern:", pattern, "after", maxAttempts, "attempts.");
+             return null; // Failed to generate after multiple attempts
+        }
+
+        function generateCVV(isAmex) {
+            const length = isAmex ? 4 : 3;
+            let cvv = '';
+            for (let i = 0; i < length; i++) {
+                cvv += Math.floor(Math.random() * 10);
+            }
+            return cvv;
+        }
+
+         function cleanAndValidateCVV(cvvInput, isAmex) {
+             const maxLength = isAmex ? 4 : 3;
+             return cvvInput.replace(/[^0-9]/g, '').slice(0, maxLength);
+         }
+
+        function generateMonth() {
+            return String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+        }
+
+        function generateMonthFromCurrent() {
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1; // 1-12
+            // Generate a month from current month to December
+            return String(Math.floor(Math.random() * (12 - currentMonth + 1)) + currentMonth).padStart(2, '0');
+        }
+
+        function generateYear() {
+             const now = new Date();
+             const currentYear = now.getFullYear();
+             // Generate a year between current year and current year + 11 (total 12 years span)
+             const futureYears = Array.from({ length: 12 }, (_, i) => currentYear + i);
+             return String(futureYears[Math.floor(Math.random() * futureYears.length)]);
+        }
+
+        function generateFutureYearIfExpiredMonth(selectedMonth) {
+             const now = new Date();
+             const currentYear = now.getFullYear();
+             const currentMonth = now.getMonth() + 1;
+             // If selected month is in the past for the current year, start generating from next year
+             const startYear = (parseInt(selectedMonth) < currentMonth) ? currentYear + 1 : currentYear;
+             const futureYears = Array.from({ length: 12 }, (_, i) => startYear + i);
+             return String(futureYears[Math.floor(Math.random() * futureYears.length)]);
+        }
+
+         function ensureFutureDate(selectedMonth, selectedYear) {
+             const now = new Date();
+             const currentYear = now.getFullYear();
+             const currentMonth = now.getMonth() + 1; // 1-12
+             let finalMonth, finalYear;
+
+             if (!selectedYear || selectedYear === "Random") {
+                 // Year is random
+                 if (!selectedMonth || selectedMonth === "Random") {
+                     // Both random: generate year first, then month ensuring validity
+                     finalYear = generateYear();
+                     finalMonth = (parseInt(finalYear) === currentYear) ? generateMonthFromCurrent() : generateMonth();
+                 } else {
+                     // Month fixed, year random: generate year ensuring month isn't expired
+                     finalMonth = selectedMonth.padStart(2, '0');
+                     finalYear = generateFutureYearIfExpiredMonth(finalMonth);
+                 }
+             } else {
+                  // Year is fixed
+                 finalYear = parseInt(selectedYear);
+                 if (!selectedMonth || selectedMonth === "Random") {
+                      // Month random, year fixed: ensure month is valid for the fixed year
+                     finalMonth = (finalYear === currentYear) ? generateMonthFromCurrent() : generateMonth();
+                 } else {
+                      // Both fixed: check if date is valid, if not, generate new valid pair (fallback)
+                     finalMonth = selectedMonth.padStart(2, '0');
+                     if (finalYear < currentYear || (finalYear === currentYear && parseInt(finalMonth) < currentMonth)) {
+                          // Chosen date is expired, generate completely new valid pair
+                         console.warn("Fixed date is expired, generating random future date instead.");
+                         toastr.warning("Selected date is expired, generating random date.", "Date Warning");
+                         finalYear = generateYear();
+                         finalMonth = (parseInt(finalYear) === currentYear) ? generateMonthFromCurrent() : generateMonth();
+                     }
+                     // If date is valid, use the fixed values
+                 }
+             }
+             return { month: finalMonth, year: String(finalYear) };
+         }
+
+         function isDateExpired(month, year) {
+              const now = new Date();
+             const currentYear = now.getFullYear();
+             const currentMonth = now.getMonth() + 1; // 1-12
+             return parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth);
+         }
+
+        function cleanAndValidateQuantity(qtyInput) {
+            let qty = qtyInput.replace(/[^0-9]/g, ''); // Remove non-digits
+            return Math.min(parseInt(qty, 10) || 10, 1000); // Default 10, max 1000
+        }
+
+        function generate() {
+            const binInput = document.getElementById('bin');
+            const cvvInput = document.getElementById('gencvv');
+            const qtyInput = document.getElementById('genqty');
+            const monthSelect = document.getElementById('month');
+            const yearSelect = document.getElementById('year');
+            const outputTextarea = document.getElementById('input-list');
+            const generateBtn = document.getElementById('generateBtn');
+
+            let binPatternsRaw = binInput.value.trim();
+            if (!binPatternsRaw) {
+                outputTextarea.value = "PLEASE ENTER A BIN PATTERN.";
+                toastr.warning("Please enter a BIN pattern.");
+                return;
+            }
+
+            // Split by semicolon, trim, remove invalid chars, filter empty or too short
+             const validBinPatterns = binPatternsRaw.split(';')
+                 .map(p => p.trim().replace(/[^0-9xX]/g, ''))
+                 .filter(p => p && p.length >= 4); // Basic length check
+
+            if (validBinPatterns.length === 0) {
+                outputTextarea.value = "NO VALID BIN PATTERNS FOUND (e.g., 4XXXXX, 51XXXX; 37XXXX).";
+                toastr.error("No valid BIN patterns found.");
+                return;
+            }
+
+            const specificCVV = cvvInput.value.trim(); // Keep raw for now
+            const quantity = cleanAndValidateQuantity(qtyInput.value);
+            const selectedMonth = monthSelect.value;
+            const selectedYear = yearSelect.value;
+
+            const patternsCount = validBinPatterns.length;
+            const qtyPerPattern = patternsCount > 0 ? Math.floor(quantity / patternsCount) : 0;
+            let remainderQty = patternsCount > 0 ? quantity % patternsCount : 0;
+
+            let generatedList = '';
+
+            for (const pattern of validBinPatterns) {
+                const isAmexLike = pattern.startsWith('34') || pattern.startsWith('37') || /^3[0-9]5/.test(pattern);
+                let currentQty = qtyPerPattern;
+                if (remainderQty > 0) {
+                    currentQty++;
+                    remainderQty--;
+                }
+
+                let generatedCount = 0;
+                let attempts = 0;
+                const maxAttemptsForPattern = currentQty * 5; // Try 5x needed quantity
+
+                while (generatedCount < currentQty && attempts < maxAttemptsForPattern) {
+                    const cardNumber = generateCard(pattern);
+                    if (cardNumber) {
+                        let month, year;
+                        ({ month, year } = ensureFutureDate(selectedMonth, selectedYear));
+
+                        let cardEntry = `${cardNumber}|${month}|${year}`;
+
+                        // Generate or use specific CVV
+                        let cvv = specificCVV
+                            ? cleanAndValidateCVV(specificCVV, isAmexLike) // Clean specific CVV here
+                            : generateCVV(isAmexLike);
+
+                         if (cvv) { // Only add CVV if generated or provided
+                            cardEntry += `|${cvv}`;
+                         }
+
+                        generatedList += cardEntry + '\n';
+                        generatedCount++;
+                    }
+                     attempts++;
+                }
+                 if (generatedCount < currentQty) {
+                     console.warn(`Could only generate ${generatedCount}/${currentQty} cards for pattern ${pattern}`);
+                     toastr.warning(`Could only generate ${generatedCount}/${currentQty} cards for pattern ${pattern}`, "Generation Warning");
+                 }
+            }
+
+            if (!generatedList) {
+                outputTextarea.value = "GENERATION FAILED. CHECK BIN PATTERN AND RETRY.";
+                 toastr.error("Card generation failed.");
+            } else {
+                 outputTextarea.value = generatedList.trim(); // Set generated list
+            }
+
+            localStorage.setItem('inputValue', outputTextarea.value); // Save generated list
+            generateBtn.innerHTML = '<i class="fas fa-check"></i> GENERATED!';
+            toastr.success(`${quantity} cards generated!`);
+            setTimeout(() => {
+                generateBtn.innerHTML = '<i class="fas fa-rocket"></i> GENERATE';
+            }, 800);
+            updateCardListCount(); // Update counter
+        }
+
+
+         // --- Clipboard Helper ---
+         function copyToClipboardHelper(text, buttonElement) {
+             if (!text || text.trim() === "") {
+                 toastr.info("Nothing to copy!");
+                 return;
+             }
+
+             navigator.clipboard.writeText(text).then(() => {
+                 const originalHtml = $(buttonElement).html();
+                 $(buttonElement).html('<i class="fas fa-check"></i> COPIED!');
+                 setTimeout(() => { $(buttonElement).html(originalHtml); }, 1500);
+                 toastr.success("List copied to clipboard!");
+             }, (err) => {
+                 // Fallback for older browsers or if clipboard API fails
+                 try {
+                     const textArea = document.createElement("textarea");
+                     textArea.value = text;
+                     textArea.style.position = "fixed"; // Prevent scrolling to bottom
+                     textArea.style.opacity = "0";
+                     document.body.appendChild(textArea);
+                     textArea.focus();
+                     textArea.select();
+                     document.execCommand('copy');
+                     document.body.removeChild(textArea);
+
+                     const originalHtml = $(buttonElement).html();
+                     $(buttonElement).html('<i class="fas fa-check"></i> COPIED!');
+                     setTimeout(() => { $(buttonElement).html(originalHtml); }, 1500);
+                     toastr.success("List copied (Fallback)!");
+                 } catch (fallbackErr) {
+                     toastr.error("Failed to copy list.");
+                     console.error('Copy Error (Fallback): ', fallbackErr);
+                 }
+             });
+         }
+
+        // --- Result Extraction Helper ---
+         function extractResultTextHelper(selector) {
+             const lines = [];
+              // Select the result box and iterate through its direct children/text nodes
+             $(selector).contents().each(function() {
+                  // Case 1: Direct text node containing card info
+                 if (this.nodeType === 3 && $(this).text().includes('|')) { // Check if it's a text node and likely contains card data
+                     const fullText = $(this).text().trim();
+                     // Try to extract only the CC|MM|YYYY|CVV part
+                      const cardPartMatch = fullText.match(/^(\d{15,16}\|\d{2}\|\d{4}(?:\|\d{3,4})?)/);
+                     if (cardPartMatch) {
+                         lines.push(cardPartMatch[1]);
+                      } else if (fullText.includes('|')) {
+                          // Fallback: Take the part before " - " if pattern matching fails
+                         lines.push(fullText.split(' - ')[0]);
+                      }
+                 }
+                 // Case 2: Badge followed by a text node containing card info
+                 else if (this.nodeType === 1 && $(this).is('span.badge')) {
+                     const nextNode = this.nextSibling;
+                     if (nextNode && nextNode.nodeType === 3 && $(nextNode).text().includes('|')) {
+                         const fullText = $(nextNode).text().trim();
+                         const cardPartMatch = fullText.match(/^(\d{15,16}\|\d{2}\|\d{4}(?:\|\d{3,4})?)/);
+                         if (cardPartMatch) {
+                             lines.push(cardPartMatch[1]);
+                         } else if (fullText.includes('|')) {
+                             lines.push(fullText.split(' - ')[0]);
+                         }
+                     }
+                 }
+             });
+             return lines.join('\n');
+         }
+
+
+        // --- Document Ready - Event Handlers & Initialization ---
+        $(document).ready((function() {
+            // Get references to UI elements
+            const manualCookieInput = document.getElementById('manual_cookie');
+            const amazonCookieInput = document.getElementById('amazon_us_cookie');
+            const linkSiteInput = document.getElementById('link_site');
+            const gateSelect = document.getElementById('gate');
+            const manualCookieGroup = document.getElementById('manual_cookie_group');
+            const amazonCookieGroup = document.getElementById('amazon_us_cookie_group');
+            const linkSiteGroup = document.getElementById('link_site_group');
+            const binInput = document.getElementById('bin');
+            const cvvInput = document.getElementById('gencvv');
+            const qtyInput = document.getElementById('genqty');
+            const monthInput = document.getElementById('month');
+            const yearInput = document.getElementById('year');
+            const inputList = document.getElementById('input-list');
+            const paymentIcon = document.getElementById('paymentIcon');
+            const herokuApiKeyInput = document.getElementById('heroku_api_key');
+            const herokuApiKeyGroup = document.getElementById('heroku_api_key_group');
+            const shopifyProductLinkInput = document.getElementById('shopify_product_link');
+            const shopifyLinkGroup = document.getElementById('shopify_link_group');
+            const proxyInput = document.getElementById('proxy_input');
+            const proxyInputGroup = document.getElementById('proxy_input_group');
+            const proxyTypeSelect = document.getElementById('proxy_type');
+            const proxyTypeGroup = document.getElementById('proxy_type_group');
+
+             // Basic check if elements exist
+             if (!gateSelect || !manualCookieInput || !amazonCookieInput || !linkSiteInput || !manualCookieGroup || !amazonCookieGroup || !linkSiteGroup || !binInput || !cvvInput || !qtyInput || !monthInput || !yearInput || !inputList || !paymentIcon || !herokuApiKeyInput || !herokuApiKeyGroup || !shopifyProductLinkInput || !shopifyLinkGroup || !proxyInput || !proxyInputGroup || !proxyTypeSelect || !proxyTypeGroup) {
+                console.error('One or more essential UI elements not found! Functionality may be broken.');
+                toastr.error("UI Error: Some elements are missing.", "Initialization Failed");
+             }
+
+
+            // --- Load saved values from localStorage ---
+            const savedGateValue = localStorage.getItem('gateValue');
+            const savedLinkValue = localStorage.getItem('link_site_value');
+            const savedAmazonCookieValue = localStorage.getItem('amazon_us_cookie_value');
+            const savedManualCookieValue = localStorage.getItem('manualCookieValue');
+            const savedHerokuApiKey = localStorage.getItem('heroku_api_key_value');
+            const savedShopifyLinks = localStorage.getItem('shopify_product_link_value');
+            const savedProxies = localStorage.getItem('proxy_input_value');
+            const savedProxyType = localStorage.getItem('proxy_type_value');
+
+            if (savedGateValue && gateSelect) gateSelect.value = savedGateValue;
+            if (savedLinkValue && linkSiteInput) linkSiteInput.value = savedLinkValue;
+            if (savedAmazonCookieValue && amazonCookieInput) amazonCookieInput.value = savedAmazonCookieValue;
+            if (savedManualCookieValue && manualCookieInput) manualCookieInput.value = savedManualCookieValue;
+            if (savedHerokuApiKey && herokuApiKeyInput) herokuApiKeyInput.value = savedHerokuApiKey;
+            if (savedShopifyLinks && shopifyProductLinkInput) shopifyProductLinkInput.value = savedShopifyLinks;
+            if (savedProxies && proxyInput) proxyInput.value = savedProxies;
+            if (savedProxyType && proxyTypeSelect) proxyTypeSelect.value = savedProxyType;
+
+            // Load generator inputs
+            if (binInput) binInput.value = localStorage.getItem('binValue') || '';
+            if (cvvInput) cvvInput.value = localStorage.getItem('gencvvValue') || '';
+            if (qtyInput) qtyInput.value = localStorage.getItem('genqtyValue') || '10';
+            if (monthInput) monthInput.value = localStorage.getItem('monthValue') || 'Random';
+            if (yearInput) yearInput.value = localStorage.getItem('yearValue') || 'Random';
+            if (inputList) inputList.value = localStorage.getItem('inputValue') || '';
+
+            updateCardListCount(); // Initial count
+
+            // Initial validation styling for Heroku key if loaded
+             if (herokuApiKeyInput && herokuApiKeyInput.value) {
+                 const initialHerokuValue = herokuApiKeyInput.value.trim();
+                 if (initialHerokuValue) {
+                     if (initialHerokuValue.includes("HRKU")) {
+                         herokuApiKeyInput.classList.add('is-valid-input');
+                     } else {
+                         herokuApiKeyInput.classList.add('is-invalid-input');
+                     }
+                 }
+             }
+
+
+            // --- Function to update conditional inputs based on gate selection ---
+            const updateConditionalInputs = function() {
+                const selectedGate = gateSelect ? gateSelect.value : null;
+
+                // Get references inside the function to ensure they are fresh if DOM changes
+                const herokuApiKeyGroup = document.getElementById('heroku_api_key_group');
+                const shopifyLinkGroup = document.getElementById('shopify_link_group');
+                const proxyInputGroup = document.getElementById('proxy_input_group');
+                const proxyTypeGroup = document.getElementById('proxy_type_group');
+                const manualCookieGroup = document.getElementById('manual_cookie_group');
+                const amazonCookieGroup = document.getElementById('amazon_us_cookie_group');
+                const linkSiteGroup = document.getElementById('link_site_group');
+
+                // Hide all conditional groups initially
+                $(manualCookieGroup).hide();
+                $(amazonCookieGroup).hide();
+                $(linkSiteGroup).hide();
+                if (herokuApiKeyGroup) $(herokuApiKeyGroup).hide();
+                if (shopifyLinkGroup) $(shopifyLinkGroup).hide();
+                if (proxyInputGroup) $(proxyInputGroup).hide();
+                if (proxyTypeGroup) $(proxyTypeGroup).hide();
+
+                if (selectedGate) {
+                    // Show relevant groups based on the selected gate
+                    if (selectedGate === "Auto.php") {
+                        $(manualCookieGroup).show();
+                        $(linkSiteGroup).show();
+                    } else if (selectedGate === "AmazonUS.php") {
+                        $(amazonCookieGroup).show();
+                    } else if (selectedGate === "Heroku.php") {
+                        if (herokuApiKeyGroup) $(herokuApiKeyGroup).show();
+                    } else if (selectedGate === "Shopify.php") { // Shopify needs Link + Proxy
+                        if (shopifyLinkGroup) $(shopifyLinkGroup).show();
+                        if (proxyInputGroup) $(proxyInputGroup).show();
+                        if (proxyTypeGroup) $(proxyTypeGroup).show();
+                    } else if (selectedGate === "Adyen.php") { // Adyen needs Proxy ONLY
+                        if (proxyInputGroup) $(proxyInputGroup).show();
+                        if (proxyTypeGroup) $(proxyTypeGroup).show();
+                        // DO NOT SHOW shopifyLinkGroup for Adyen
+                    }
+                    // Add more conditions for other gates if they need specific inputs
+
+                    // --- Update Payment Icon ---
+                    const paypalIconUrl = 'https://cdn.iconscout.com/icon/free/png-512/free-paypal-logo-icon-download-in-svg-png-gif-file-formats--bitcoin-payment-social-media-pack-logos-icons-5582514.png?f=webp&w=512';
+                    const stripeIconUrl = 'https://cdn3.iconfinder.com/data/icons/leto-finance-money-1/64/credit_card_aproove_check_validation-512.png'; // Generic CC icon for VBV/Stripe
+                    const wooIconUrl = 'https://maksimer.com/wp-content/uploads/sites/3/2023/08/woocommerce-icon-3d-purple.png';
+                    const amazonIconUrl = 'https://cdn-icons-png.flaticon.com/512/14079/14079391.png'; // Example Amazon Icon
+                    const herokuIconUrl = 'https://railsware.com/blog/wp-content/uploads/2017/12/Heroku-Queuing-Time.png'; // Heroku Icon
+                    const shopifyIconUrl = 'https://cdn3.iconfinder.com/data/icons/social-media-2068/64/_shopping-512.png';
+                    const adyenIconUrl = 'https://seekvectors.com/files/download/Adyen-logo.png';
+
+                    if (paymentIcon) {
+                        if (selectedGate === 'Paypal.php') { paymentIcon.src = paypalIconUrl; }
+                         else if (selectedGate === 'Vbv.php') { paymentIcon.src = stripeIconUrl; } // VBV Lookup might relate to 3DS/Stripe
+                         else if (selectedGate === 'Shopify.php') { paymentIcon.src = shopifyIconUrl; }
+                         else if (selectedGate === 'Auto.php') { paymentIcon.src = wooIconUrl; } // WooCommerce
+                         else if (selectedGate === 'AmazonUS.php') { paymentIcon.src = amazonIconUrl; }
+                         else if (selectedGate === 'Heroku.php') { paymentIcon.src = herokuIconUrl; } // Stripe via Heroku
+                         else if (selectedGate === 'Adyen.php') { paymentIcon.src = adyenIconUrl; }
+                        else { paymentIcon.src = paypalIconUrl; } // Default icon
+                    }
+                }
+            };
+
+            // Initial call to set inputs based on loaded gate value
+            updateConditionalInputs();
+
+            // --- Event Listeners for Input Saving and Validation Styling ---
+            if (gateSelect) {
+                gateSelect.addEventListener('change', function() {
+                    localStorage.setItem('gateValue', this.value);
+                    updateConditionalInputs();
+                     // Reset validation styles on other inputs when gate changes
+                    $('#manual_cookie, #amazon_us_cookie, #link_site, #heroku_api_key, #shopify_product_link, #proxy_input').removeClass('is-valid-input is-invalid-input');
+                });
+            }
+
+            // Add validation styling and save to localStorage on input
+            if (manualCookieInput) {
+                manualCookieInput.addEventListener('input', function() {
+                    this.classList.remove('is-valid-input', 'is-invalid-input');
+                     // Basic validation (presence and maybe common keywords)
+                    if (this.value.trim() && (this.value.includes('sbjs') || this.value.includes('wordpress') || this.value.includes('__stripe'))) this.classList.add('is-valid-input');
+                    else if (this.value.trim()) this.classList.add('is-invalid-input'); // Invalid if non-empty but doesn't match
+                    localStorage.setItem('manualCookieValue', this.value)
+                })
+            }
+            if (amazonCookieInput) {
+                 amazonCookieInput.addEventListener('input', function() {
+                     this.classList.remove('is-valid-input', 'is-invalid-input');
+                     // Basic validation
+                     if (this.value.trim() && (this.value.includes('session-id') || this.value.includes('ubid-main') || this.value.includes('x-main'))) this.classList.add('is-valid-input');
+                     else if (this.value.trim()) this.classList.add('is-invalid-input');
+                     localStorage.setItem('amazon_us_cookie_value', this.value)
+                 })
+            }
+             if (linkSiteInput) {
+                 linkSiteInput.addEventListener('input', function() {
+                     this.classList.remove('is-valid-input', 'is-invalid-input');
+                      // Basic validation
+                     if (this.value.trim() && this.value.includes('payment-method') && this.value.startsWith('http')) this.classList.add('is-valid-input');
+                     else if (this.value.trim()) this.classList.add('is-invalid-input');
+                     localStorage.setItem('link_site_value', this.value)
+                 })
+             }
+             if (herokuApiKeyInput) {
+                 herokuApiKeyInput.addEventListener('input', function() {
+                    this.classList.remove('is-valid-input', 'is-invalid-input');
+                    const value = this.value.trim();
+                    if (value) { // Only validate if not empty
+                        if (value.includes("HRKU")) { // Check for the required substring
+                            this.classList.add('is-valid-input');
+                        } else {
+                            this.classList.add('is-invalid-input');
+                        }
+                    }
+                    localStorage.setItem('heroku_api_key_value', this.value);
+                });
+             }
+             if (shopifyProductLinkInput) {
+                 shopifyProductLinkInput.addEventListener('input', function() {
+                     // No specific validation here, just save
+                     this.classList.remove('is-valid-input', 'is-invalid-input');
+                     localStorage.setItem('shopify_product_link_value', this.value);
+                 });
+             }
+             if (proxyInput) {
+                 proxyInput.addEventListener('input', function() {
+                      // No specific validation here, just save
+                     this.classList.remove('is-valid-input', 'is-invalid-input');
+                     localStorage.setItem('proxy_input_value', this.value);
+                 });
+             }
+              if (proxyTypeSelect) {
+                 proxyTypeSelect.addEventListener('change', function() {
+                     localStorage.setItem('proxy_type_value', this.value);
+                 });
+             }
+
+
+            // Generator input listeners (save values)
+            if (binInput) binInput.addEventListener('input', (() => {
+                 // Auto-format BIN input (allow only numbers, x, X, ;)
+                const originalValue = binInput.value;
+                const cleanedValue = originalValue.replace(/[^0-9xX;]/g, '');
+                 if (originalValue !== cleanedValue) {
+                     // Preserve cursor position roughly
+                     const currentPos = binInput.selectionStart;
+                     let diff = 0;
+                     for(let i = 0; i < currentPos; i++) {
+                         if (/[^0-9xX;]/.test(originalValue[i])) diff++;
+                     }
+                     const newPos = currentPos - diff;
+                     binInput.value = cleanedValue;
+                     binInput.setSelectionRange(newPos, newPos);
+                 }
+                 localStorage.setItem('binValue', binInput.value)
+             }));
+             if (cvvInput) cvvInput.addEventListener('input', (() => {
+                 const isAmex = binInput.value.startsWith('34') || binInput.value.startsWith('37'); // Check if BIN looks like Amex
+                 cvvInput.value = cleanAndValidateCVV(cvvInput.value, isAmex), localStorage.setItem('gencvvValue', cvvInput.value)
+             }));
+             if (qtyInput) qtyInput.addEventListener('input', (() => { qtyInput.value = cleanAndValidateQuantity(qtyInput.value), localStorage.setItem('genqtyValue', qtyInput.value) }));
+             if (monthInput) monthInput.addEventListener('change', () => localStorage.setItem('monthValue', monthInput.value));
+             if (yearInput) yearInput.addEventListener('change', () => localStorage.setItem('yearValue', yearInput.value));
+
+            // Input list listener (auto-format and save)
+             if (inputList) inputList.addEventListener('input', (() => {
+                // Optionally re-format/validate on paste/input - commented out for now
+                // const formattedText = extractValidCCFormat(inputList.value);
+                // inputList.value = formattedText;
+                localStorage.setItem('inputValue', inputList.value); // Save raw input for now
+                updateCardListCount();
+             }));
+
+
+            // --- Main Button Event Handlers ---
+
+            $('#btn-start').click(function() {
+                var listContent = $("#input-list").val().trim();
+                if (!listContent) {
+                    toastr.warning("Input cards is empty!");
+                    $("#input-list").focus();
+                    return;
+                }
+
+                var lines = listContent.split('\n').filter(Boolean); // Filter out empty lines
+                 if (lines.length === 0) {
+                    toastr.warning("Input cards contains no valid lines after filtering!");
+                    $("#input-list").focus();
+                    return;
+                 }
+
+                // --- **MODIFIED**: Validation logic based on gate ---
+                const currentGate = document.getElementById('gate').value;
+                const manCookie = $("#manual_cookie").val().trim();
+                const amzCookie = $("#amazon_us_cookie").val().trim();
+                const siteLink = $("#link_site").val().trim();
+                const hrkKeyInput = document.getElementById('heroku_api_key');
+                const hrkKey = hrkKeyInput ? hrkKeyInput.value.trim() : "";
+                const shopifyLinksInput = document.getElementById('shopify_product_link');
+                const shopifyLinks = shopifyLinksInput ? shopifyLinksInput.value.trim() : "";
+                 const proxyInputElem = document.getElementById('proxy_input');
+                 const proxies = proxyInputElem ? proxyInputElem.value.trim() : "";
+
+                let gateValid = true; // Assume valid initially
+
+                if (currentGate === "Shopify.php") {
+                    if (!shopifyLinks) {
+                        toastr.warning("SHOPIFY GATE REQUIRES AT LEAST ONE PRODUCT LINK.");
+                        if (shopifyLinksInput) $("#shopify_product_link").addClass('is-invalid-input').focus();
+                        gateValid = false;
+                    }
+                    if (!proxies) {
+                         toastr.warning("SHOPIFY GATE REQUIRES AT LEAST ONE PROXY.");
+                         if (proxyInputElem) $("#proxy_input").addClass('is-invalid-input').focus();
+                         gateValid = false;
+                    }
+                } else if (currentGate === "Adyen.php") {
+                    // Adyen only requires proxies
+                     if (!proxies) {
+                         toastr.warning("ADYEN GATE REQUIRES AT LEAST ONE PROXY.");
+                         if (proxyInputElem) $("#proxy_input").addClass('is-invalid-input').focus();
+                         gateValid = false;
+                     }
+                     // No product link check for Adyen
+                } else if (currentGate === "Auto.php") {
+                    if (!manCookie || !siteLink) {
+                         toastr.warning("WOOCOMMERCE GATE REQUIRES BOTH COOKIE AND SITE LINK.");
+                         if (!manCookie) $("#manual_cookie").addClass('is-invalid-input').focus();
+                         if (!siteLink) $("#link_site").addClass('is-invalid-input').focus();
+                         gateValid = false; // Return immediately if invalid
+                    }
+                } else if (currentGate === "AmazonUS.php") {
+                    if (!amzCookie) {
+                        toastr.warning("AMAZON US GATE REQUIRES THE COOKIE.");
+                        $("#amazon_us_cookie").addClass('is-invalid-input').focus();
+                        gateValid = false; // Return immediately
+                    }
+                } else if (currentGate === "Heroku.php") {
+                     if (!hrkKey) {
+                         toastr.warning("HEROKU GATE REQUIRES THE API KEY.");
+                         if (hrkKeyInput) $("#heroku_api_key").addClass('is-invalid-input').focus();
+                         gateValid = false;
+                     } else if (!hrkKey.includes("HRKU")) {
+                          toastr.warning("HEROKU API KEY IS INVALID (MUST CONTAIN 'HRKU').");
+                          if (hrkKeyInput) $("#heroku_api_key").addClass('is-invalid-input').focus();
+                          gateValid = false;
+                     }
+                }
+                // Add more gate-specific validations here if needed
+
+                if (!gateValid) return; // Stop if validation failed
+
+
+                // Start processing
+                processingQueue = lines.slice(); // Copy lines to the queue
+                totalItems = lines.length;
+                testedItems = 0;
+                approvedItems = 0; // Reset counters
+                liveResultItems = 0;
+                declinedItems = 0;
+                activeThreads = 0;
+                stopped = false; // Set stopped to false
+
+                updateStats(); // Update UI counters
+
+                toastr.info(`Starting check for ${totalItems} cards via ${$('#gate option:selected').text()}...`);
+                $("#checker-status").attr("class", "badge badge-info").html('<i class="fas fa-cog fa-spin"></i> STARTING...');
+
+                // Disable buttons/inputs during processing
+                $(this).prop("disabled", true);
+                $("#btn-stop").prop("disabled", false);
+                $("#input-list, #bin, #gencvv, #genqty, #month, #year, #generateBtn, #copyGenBtn, #gate, #manual_cookie, #amazon_us_cookie, #link_site, #heroku_api_key, #shopify_product_link, #proxy_input, #proxy_type").prop("disabled", true);
+
+
+                processQueue(); // Start the checking process
+            });
+
+            $('#btn-stop').click(function() {
+                stopped = true; // Set flag to stop processing
+                processingQueue = []; // Clear the queue
+                // activeThreads will decrease naturally as current requests finish/fail/timeout
+
+                $("#checker-status").attr("class", "badge badge-secondary").html('<i class="fas fa-stop"></i> PROCESSING STOPPED.');
+                toastr.warning("Checker stopped by user.");
+
+                // Update button states
+                $(this).prop("disabled", true);
+                $("#btn-start").prop("disabled", false);
+
+                // Re-enable inputs
+                 $("#input-list, #bin, #gencvv, #genqty, #month, #year, #generateBtn, #copyGenBtn, #gate, #manual_cookie, #amazon_us_cookie, #link_site, #heroku_api_key, #shopify_product_link, #proxy_input, #proxy_type").prop("disabled", false);
+            });
+
+            $('#btn-clean-all').click(function() {
+                // Clear result lists
+                $("#lista_approved, #lista_aprovadas, #lista_reprovadas").empty();
+                // Clear input list
+                $("#input-list").val('');
+                 // Reset counters
+                 approvedItems = 0;
+                 liveResultItems = 0;
+                 declinedItems = 0;
+                 testedItems = 0;
+                 totalItems = 0;
+                 updateStats(); // Update UI
+                 toastr.info("All results and input list cleared.");
+            });
+
+            // --- Generator Button Handlers ---
+            $('#generateBtn').click(generate);
+
+            // **FIXED**: Added copy function for the generator list
+             function copyGenList() {
+                 const textToCopy = $("#input-list").val();
+                 copyToClipboardHelper(textToCopy, this); // 'this' refers to the button clicked
+             }
+             $('#copyGenBtn').click(copyGenList); // Use the correct button ID
+
+
+            // --- Result Tab Button Handlers ---
+            $('.btn-copy-approved').click(function() {
+                const textToCopy = extractResultTextHelper('#lista_approved');
+                copyToClipboardHelper(textToCopy, this);
+            });
+
+            $('.btn-copy-live').click(function() {
+                const textToCopy = extractResultTextHelper('#lista_aprovadas');
+                copyToClipboardHelper(textToCopy, this);
+            });
+
+             // **FIXED**: Ensured correct button class is used
+            $('.btn-trash').click(function() { // Corrected class selector
+                $("#lista_reprovadas").empty(); // Clear the declined list display
+                declinedItems = 0; // Reset declined counter
+                updateStats(); // Update totals display
+                toastr.info("Declined / Errors list cleared.");
+            });
+
+        })); // End document.ready
+    </script>
+
+</body>
+</html>
