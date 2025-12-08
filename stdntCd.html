@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduate ID Card - Xdream Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- নতুন ফন্ট লোড করা --- */
+        @font-face {
+            font-family: 'BalisticaSignatura';
+            src: url('bastliga-one.regular.otf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* General Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Roboto', 'Hind Siliguri', sans-serif; 
+            background-color: #f0f2ff; 
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+        }
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            overflow: hidden; 
+        }
+
+        /* Card Styles */
+        .id-card-container { display: flex; flex-direction: column; align-items: center; }
+        .id-card { 
+            background: #fff; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            position: relative; 
+            overflow: hidden; 
+            display: inline-block; 
+            width: auto; 
+            height: auto; 
+            transition: background-color 0.3s, color 0.3s, padding 0.3s; 
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        .download-button { 
+            background: linear-gradient(to right, #007bff, #0056b3); 
+            color: white; 
+            padding: 12px 25px; 
+            border: none; 
+            border-radius: 30px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .download-button:hover { transform: translateY(-3px); }
+        [contenteditable]:focus { outline: 1px solid #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.5); border-radius: 2px; }
+        
+        /* নতুন ডিজাইন (DIU স্টাইল) */
+        .diu-style-card {
+            padding: 25px; 
+            background-color: #f9fbf9; 
+            border: 1px solid #e0e0e0;
+        }
+        
+        /* ফিক্সড কন্টেন্ট হোল্ডার */
+        .id-card-inner-content {
+            width: 550px;
+            height: 330px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .diu-style-card .id-card-header {
+            width: 100%; display: flex; align-items: center; gap: 15px; padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .diu-style-card .college-logo {
+            width: 50px; height: 50px; cursor: pointer; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background-color: transparent; border-radius: 0; color: #777; font-size: 14px;
+        }
+        .diu-style-card .college-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .diu-style-card .college-info { text-align: left; flex-grow: 1; }
+        .diu-style-card .college-name { font-size: 20px; font-weight: 700; color: #222; }
+        .diu-style-card .card-title { font-size: 16px; color: #555; font-weight: 500; }
+        .diu-style-card .card-body { display: flex; justify-content: space-between; width: 100%; flex-grow: 1; overflow: hidden; }
+        .diu-style-card .info-details { flex-basis: 60%; display: flex; flex-direction: column; gap: 8px; }
+        .diu-style-card .info-item { display: flex; font-size: 14px; transition: font-size 0.3s, font-weight 0.3s; }
+        .diu-style-card .info-label { width: 130px; flex-shrink: 0; color: #555; font-weight: 500; transition: font-weight 0.3s; }
+        .diu-style-card .info-colon { color: #000; font-weight: 600; margin-right: 5px; transition: font-weight 0.3s, color 0.3s; }
+        .diu-style-card .info-value { color: #000; font-weight: 600; white-space: pre-wrap; transition: font-weight 0.3s, color 0.3s; }
+
+        .diu-style-card .photo-signature-block { flex-basis: 35%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .diu-style-card .photo-uploader { width: 130px; height: 160px; border-radius: 5px; margin-bottom: 20px; border: 4px dashed #ccc; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; overflow: hidden; background-color: #e9ecef; color: #777; font-size: 14px; transition: border-color 0.3s, border-style 0.3s, border-width 0.3s; }
+        .diu-style-card .photo-uploader img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+        .diu-style-card .signature-block { text-align: center; width: 100%; margin-top: auto; }
+        .diu-style-card .signature-text { font-family: 'BalisticaSignatura', 'Brush Script MT', 'cursive'; font-size: 28px; color: #333; transition: color 0.3s; }
+        .diu-style-card .signature-line { border-bottom: 1px solid #555; width: 80%; margin: 0 auto 5px auto; }
+        .diu-style-card .register-title { font-size: 14px; font-weight: 600; color: #333; }
+        .diu-style-card .register-org { font-size: 13px; color: #444; }
+
+        /* হেডার এবং ফুটার স্টাইল (style.css থেকে আসবে) */
+        
+        /* --- নতুন: আপডেটেড কন্ট্রোল প্যানেল স্টাইল --- */
+        .controls-container {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            max-width: 850px; /* প্রয়োজন অনুযায়ী প্রস্থ ঠিক করুন */
+            display: flex;
+            flex-wrap: wrap; /* নিচের সেকশনগুলো wrap হবে */
+            justify-content: center;
+            gap: 10px;
+        }
+        .controls-top-row {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            align-items: flex-start; /* উপরের দিকে অ্যালাইন */
+            margin-bottom: 10px; /* নিচের সেকশন থেকে গ্যাপ */
+        }
+        .controls-container fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #card-style-fieldset {
+            flex-grow: 1; /* বাম পাশের সেকশন জায়গা নেবে */
+            min-width: 400px; /* একটি ন্যূনতম প্রস্থ */
+        }
+        #tools-fieldset {
+            flex-shrink: 0; /* Tools সেকশন যেন ছোট না হয় */
+            width: auto; /* কন্টেন্ট অনুযায়ী প্রস্থ */
+        }
+         #text-style-fieldset, #image-style-fieldset {
+            flex: 1; /* নিচের সেকশনগুলো সমান জায়গা নেবে */
+             min-width: 250px; /* একটি ন্যূনতম প্রস্থ */
+        }
+        
+        .controls-container legend { font-size: 14px; font-weight: 600; color: #007bff; padding: 0 5px; margin-left: 10px; }
+        .color-control, .slider-control, .control-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .color-control label, .slider-control label, .control-item label { font-size: 14px; font-weight: 500; color: #333; }
+        .color-control input[type="color"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; width: 40px; height: 40px; background-color: transparent; border: none; cursor: pointer; padding: 0; border-radius: 50%; overflow: hidden; }
+        .color-control input[type="color"]::-webkit-color-swatch { border-radius: 50%; border: 1px solid #ddd; }
+        .color-control input[type="color"]::-moz-color-swatch { border-radius: 50%; border: 1px solid #ddd; }
+        .slider-control input[type="range"] { width: 100px; cursor: pointer; }
+        .slider-control span { font-size: 13px; color: #555; min-width: 40px; text-align: center; }
+        .control-item button { background-color: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; padding: 5px 10px; font-size: 13px; cursor: pointer; margin-top: 2px; }
+        .control-item button:hover { background-color: #e0e0e0; }
+        .bg-image-controls { display: flex; gap: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-container">
+            <a class='logo' href='/'>Xdream</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href='/'>Home</a></li>
+                    <li><a href='/student-id-card-maker'>ID Card Tools</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="id-card-container">
+            <div id="diu-card" class="id-card diu-style-card">
+                <div class="id-card-inner-content"> 
+                    <div class="id-card-header">
+                        <label for="s3-logo-uploader" class="college-logo" id="s3-logo-box">
+                            <img id="s3-logo-img" src="" style="display: none;" alt="Logo">
+                            <span>Logo</span> 
+                        </label>
+                        <input type="file" id="s3-logo-uploader" accept="image/*" style="display: none;">
+                        <div class="college-info">
+                            <div class="college-name" id="college-name-main" contenteditable="true" data-sync="college-name">Daffodil International University</div>
+                            <div class="card-title" contenteditable="true">Life Registered Graduate Identity Card</div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="info-details">
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Registration No.</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-reg-no" contenteditable="true">DIU2025PQRSTU</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Name</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-name" contenteditable="true">Farhan Siddique</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Father's Name</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-father-name" contenteditable="true">Md. Emran Hossan</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Mother's Name</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-mother-name" contenteditable="true">Razia Sultana</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Address</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-address" contenteditable="true">Ashulia, Dhaka-1341, Bangladesh</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Date of Birth</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="data-dob" contenteditable="true">25/11/2003</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Issue on</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="s3-issue-date" contenteditable="true"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label" contenteditable="true">Valid up to</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value" id="s3-valid-till" contenteditable="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="photo-signature-block">
+                            <label for="s3-photo-uploader" class="photo-uploader" id="s3-photo-box">
+                                <img id="s3-photo" src="" style="display: none;" alt="Student Photo">
+                                <span>Upload Photo</span> 
+                            </label>
+                            <input type="file" id="s3-photo-uploader" accept="image/*" style="display: none;">
+
+                            <div class="signature-block">
+                                <div class="signature-text" id="data-signature" contenteditable="true">Farhan Siddique</div>
+                                <div class="signature-line"></div>
+                                <div class="register-title" contenteditable="true">Register</div>
+                                <div class="register-org" contenteditable="true" data-sync="college-name">Daffodil International University</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+            
+            <div class="controls-container">
+                <div class="controls-top-row">
+                    <fieldset id="card-style-fieldset">
+                        <legend>কার্ড স্টাইল</legend>
+                        <div class="color-control">
+                            <label for="bg-color-picker">ব্যাকগ্রাউন্ড কালার:</label>
+                            <input type="color" id="bg-color-picker" value="#f9fbf9">
+                        </div>
+                        <div class="control-item">
+                            <label>ব্যাকগ্রাউন্ড ইমেজ:</label>
+                            <input type="file" id="bg-image-uploader" accept="image/*" style="display: none;">
+                            <div class="bg-image-controls">
+                                <button type="button" id="bg-image-btn">আপলোড</button>
+                                <button type="button" id="bg-image-remove-btn">মুছে ফেলুন</button>
+                            </div>
+                        </div>
+                        <div class="slider-control">
+                            <label for="card-radius-slider">কার্ড কর্নার:</label>
+                            <input type="range" id="card-radius-slider" min="0" max="50" value="15">
+                            <span id="radius-value">15px</span>
+                        </div>
+                        <div class="slider-control">
+                            <label for="card-padding-slider">বাইরের প্যাডিং:</label>
+                            <input type="range" id="card-padding-slider" min="25" max="75" value="25">
+                            <span id="card-padding-value">25px</span>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset id="tools-fieldset">
+                        <legend>Tools</legend>
+                        <div class="control-item">
+                            <label>Random Data</label>
+                            <button type="button" id="random-data-btn">Generate</button>
+                        </div>
+                    </fieldset>
+                </div> 
+                
+                <fieldset id="text-style-fieldset">
+                    <legend>লেখা স্টাইল</legend>
+                    <div class="color-control">
+                        <label for="text-color-picker">লেখার কালার:</label>
+                        <input type="color" id="text-color-picker" value="#222222">
+                    </div>
+                    <div class="color-control">
+                        <label for="signature-color-picker">স্বাক্ষরের কালার:</label>
+                        <input type="color" id="signature-color-picker" value="#222222">
+                    </div>
+                    <div class="slider-control">
+                        <label for="font-size-slider">লেখার সাইজ:</label>
+                        <input type="range" id="font-size-slider" min="10" max="18" value="14">
+                        <span id="font-size-value">14px</span>
+                    </div>
+                    <div class="control-item">
+                        <label>লেখার ওজন:</label>
+                        <button type="button" id="font-weight-toggle">Bold</button>
+                    </div>
+                </fieldset>
+
+                <fieldset id="image-style-fieldset">
+                    <legend>ছবি স্টাইল</legend>
+                    <div class="color-control">
+                        <label for="photo-border-color-picker">ছবির বর্ডার কালার:</label>
+                        <input type="color" id="photo-border-color-picker" value="#CCCCCC">
+                    </div>
+                    <div class="slider-control">
+                        <label for="photo-border-slider">ছবির বর্ডার সাইজ:</label>
+                        <input type="range" id="photo-border-slider" min="0" max="10" value="4">
+                        <span id="photo-border-value">4px</span>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <button class="download-button" id="download-btn-diu">কার্ড ডাউনলোড করুন</button>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 <a href="https://t.me/imbussy" target="_blank">Xdream</a>. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- Universal Functions ---
+        function downloadCard(elementId, filename) {
+            const cardElement = document.getElementById(elementId);
+            if (!cardElement) return;
+            setTimeout(() => {
+                html2canvas(cardElement, { scale: 3, useCORS: true, backgroundColor: null })
+                .then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.download = filename;
+                    link.click();
+                }).catch(error => console.error("Download error:", error));
+            }, 500); 
+        }
+        
+        function setupImageUploader(uploaderId, imageId, boxId = null) {
+            const uploader = document.getElementById(uploaderId);
+            if (!uploader) return;
+            uploader.addEventListener('change', event => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        const image = document.getElementById(imageId);
+                        image.src = e.target.result;
+                        image.style.display = 'block';
+                        if (boxId) {
+                            const box = document.getElementById(boxId);
+                            const text = box.querySelector('span');
+                            if (text) text.style.display = 'none';
+                            if(box.classList.contains('photo-uploader')) {
+                                box.style.borderStyle = 'solid'; 
+                            } else {
+                                box.style.border = 'none';
+                            }
+                            box.style.padding = '0';
+                            box.style.backgroundColor = 'transparent';
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // --- Random Data Generator ---
+        const maleFirstNames = ["Farhan", "Rahim", "Karim", "Ashik", "Rizwan", "Sabbir", "Mehedi", "Tanjim", "Abrar", "Nabil", "Fahim", "Saif", "Imran", "Rafi", "Jamil", "Masud", "Tariq", "Zahid", "Liton", "Mizan"];
+        const femaleFirstNames = ["Afia", "Sultana", "Jannat", "Maria", "Sumaiya", "Fatima", "Ayesha", "Nusrat", "Sadia", "Tasnim"];
+        const maleLastNames = ["Siddique", "Hossan", "Uddin", "Ahmed", "Chowdhury", "Khan", "Islam", "Rahman", "Molla", "Sarkar", "Ali", "Sheikh", "Mahmud", "Haque", "Talukder", "Howlader"];
+        const femaleLastNames = ["Aktar", "Begum", "Parvin", "Khatun", "Sultana"];
+
+        const maleNames = ["Md. Emran", "Abdur Rahim", "Kazi Nazrul", "Jamal", "Kamal", "Firoz", "Mostofa", "Belal", "Harun", "Rashid", "Anwar", "Shafiqul"];
+        const femaleNames = ["Razia", "Amena", "Fatima", "Jannatul", "Afroza", "Farida", "Nasima", "Rokeya", "Shirin", "Tahmina", "Laila"];
+        const locations = [
+            { city: "Dhaka-1216", areas: ["Mirpur-10", "Dhanmondi-32", "Gulshan-1", "Banani", "Mohakhali", "Uttara Sector-10", "Motijheel", "Lalbagh", "Farmgate"] },
+            { city: "Dhaka-1341", areas: ["Ashulia", "Savar", "Tongi"] },
+            { city: "Chattogram-4000", areas: ["Agrabad", "Nasirabad", "Kotwali", "Pahartali"] },
+            { city: "Rangpur-5400", areas: ["Shapla Chottor", "Dhap", "CO Bazar", "Medical More"] },
+            { city: "Lalmonirhat-5500", areas: ["Kaliganj", "Hatibandha", "Patgram", "Aditmari"] },
+            { city: "Sylhet-3100", areas: ["Zindabazar", "Amberkhana", "Shibganj", "Tilagor"] },
+            { city: "Rajshahi-6000", areas: ["Shaheb Bazar", "Motihar", "Boalia", "Uposhohor"] },
+            { city: "Khulna-9100", areas: ["Shib Bari", "Daulatpur", "Khalishpur", "Sonadanga"] },
+            { city: "Barishal-8200", areas: ["Nathullabad", "Sadar Road", "Rupatali", "Amtala"] },
+            { city: "Mymensingh-2200", areas: ["Maskanda", "Charpara", "Ganginarpar", "Akua"] },
+            { city: "Cumilla-3500", areas: ["Kandirpar", "Tomchom Bridge", "Paduar Bazar", "Shashongacha"] },
+            { city: "Bogura-5800", areas: ["Satmatha", "Jaleswaritola", "Thanthania", "Malatinagar"] },
+            { city: "Gazipur-1700", areas: ["Joydebpur", "Board Bazar", "Konabari", "Kashimpur"] }
+        ];
+
+        function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+        function getRandomDOB() {
+            const year = Math.floor(Math.random() * (2005 - 1995 + 1)) + 1995;
+            const month = Math.floor(Math.random() * 12) + 1;
+            const day = Math.floor(Math.random() * 28) + 1; 
+            return `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+        }
+        function getRandomRegNo() {
+            const letters = 'PQRSTUVWXYZ'; let randomLetters = '';
+            for (let i = 0; i < 6; i++) { randomLetters += letters.charAt(Math.floor(Math.random() * letters.length)); }
+            return `DIU${new Date().getFullYear()}${randomLetters}`;
+        }
+        function populateRandomData() {
+            const isMale = Math.random() > 0.5;
+            let fullName;
+            if (isMale) {
+                const firstName = getRandomItem(maleFirstNames);
+                const lastName = getRandomItem(maleLastNames);
+                fullName = `${firstName} ${lastName}`;
+            } else {
+                const firstName = getRandomItem(femaleFirstNames);
+                const lastName = getRandomItem(femaleLastNames);
+                fullName = `${firstName} ${lastName}`;
+            }
+            const fatherName = `${getRandomItem(maleNames)} ${getRandomItem(maleLastNames)}`;
+            const motherFullName = `${getRandomItem(femaleNames)} ${getRandomItem(femaleLastNames)}`;
+            const randomLocation = getRandomItem(locations); const randomArea = getRandomItem(randomLocation.areas); const address = `${randomArea}, ${randomLocation.city}, Bangladesh`;
+            document.getElementById('data-reg-no').textContent = getRandomRegNo();
+            document.getElementById('data-name').textContent = fullName;
+            document.getElementById('data-father-name').textContent = fatherName; // This will be synced anyway, but good for init
+            document.getElementById('data-mother-name').textContent = motherFullName; // This will be synced anyway, but good for init
+            document.getElementById('data-address').textContent = address;
+            document.getElementById('data-dob').textContent = getRandomDOB();
+            document.getElementById('data-signature').textContent = fullName; 
+
+            // কলেজের নাম এবং রেজিস্ট্রেশন নম্বর আপডেট
+            const collegeNameEl = document.getElementById('college-name-main');
+            if (collegeNameEl) {
+                collegeNameEl.textContent = "Daffodil International University"; // Reset to default
+                updateLinkedFields({ target: collegeNameEl }); // Sync all fields
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- প্রধান এলিমেন্ট ---
+            const cardElement = document.getElementById('diu-card');
+            const photoUploaderBox = document.getElementById('s3-photo-box');
+
+            // --- কন্ট্রোল এলিমেন্ট ---
+            const bgColorPicker = document.getElementById('bg-color-picker');
+            const textColorPicker = document.getElementById('text-color-picker');
+            const signatureColorPicker = document.getElementById('signature-color-picker'); 
+            const photoBorderColorPicker = document.getElementById('photo-border-color-picker'); 
+            const cardRadiusSlider = document.getElementById('card-radius-slider'); 
+            const radiusValueSpan = document.getElementById('radius-value'); 
+            const photoBorderSlider = document.getElementById('photo-border-slider');
+            const photoBorderValueSpan = document.getElementById('photo-border-value');
+            const cardPaddingSlider = document.getElementById('card-padding-slider'); 
+            const cardPaddingValueSpan = document.getElementById('card-padding-value'); 
+
+            // --- ব্যাকগ্রাউন্ড ইমেজ কন্ট্রোল ---
+            const bgImageUploader = document.getElementById('bg-image-uploader');
+            const bgImageBtn = document.getElementById('bg-image-btn');
+            const bgImageRemoveBtn = document.getElementById('bg-image-remove-btn');
+
+            // --- ফন্ট কন্ট্রোল ---
+            const fontSizeSlider = document.getElementById('font-size-slider');
+            const fontSizeValue = document.getElementById('font-size-value');
+            const fontWeightToggle = document.getElementById('font-weight-toggle');
+            let isBold = false; 
+
+            // --- Random Data বাটন ---
+            const randomDataBtn = document.getElementById('random-data-btn');
+
+            // --- নতুন ফাংশন: কলেজের নাম পরিবর্তন হলে সব লিংকড ফিল্ড আপডেট করার জন্য ---
+            function updateLinkedFields(e) {
+                const sourceElement = e.target;
+                const syncKey = sourceElement.getAttribute('data-sync');
+                const newText = sourceElement.textContent;
+
+                if (syncKey === 'college-name') {
+                    // ১. কলেজের নাম সিঙ্ক করা
+                    document.querySelectorAll(`[data-sync="${syncKey}"]`).forEach(el => {
+                        if (el !== sourceElement) {
+                            el.textContent = newText;
+                        }
+                    });
+
+                    // ২. রেজিস্ট্রেশন নম্বর আপডেট করা
+                    const regNoEl = document.getElementById('data-reg-no');
+                    if (regNoEl) {
+                        // নামের সংক্ষিপ্ত রূপ তৈরি
+                        const acronym = newText.split(' ').map(word => word[0]).join('').toUpperCase();
+                        const currentRegNo = regNoEl.textContent;
+                        const numericPart = currentRegNo.substring(currentRegNo.indexOf('202')); // Assuming it always starts with DIU...
+                        regNoEl.textContent = `${acronym}${numericPart}`;
+                    }
+                }
+            }
+
+            // --- কলেজের নামের জন্য ইভেন্ট লিসেনার ---
+            const collegeNameMain = document.getElementById('college-name-main');
+            if (collegeNameMain) collegeNameMain.addEventListener('input', updateLinkedFields);
+
+            // --- আপডেট ফাংশন ---
+            function updateTextColor(color) {
+                if (!cardElement) return;
+                const elements = cardElement.querySelectorAll( '.college-name, .card-title, .info-label, .info-value, .info-colon, .register-title, .register-org' );
+                elements.forEach(el => el.style.color = color);
+                const sigLine = cardElement.querySelector('.signature-line');
+                if (sigLine) sigLine.style.borderColor = color;
+            }
+            function updateSignatureColor(color) {
+                const sigText = cardElement.querySelector('.signature-text');
+                if (sigText) sigText.style.color = color;
+            }
+            function updateBgColor(color) { if (cardElement) cardElement.style.backgroundColor = color; }
+            function updatePhotoBorderColor(color) { if (photoUploaderBox) photoUploaderBox.style.borderColor = color; }
+            function updateCardRadius(radius) {
+                const radiusPx = radius + 'px';
+                if (cardElement) cardElement.style.borderRadius = radiusPx;
+                if (radiusValueSpan) radiusValueSpan.textContent = radiusPx;
+            }
+            function updateCardPadding(padding) {
+                const paddingPx = padding + 'px';
+                if (cardElement) cardElement.style.padding = paddingPx;
+                if (cardPaddingValueSpan) cardPaddingValueSpan.textContent = paddingPx;
+            }
+            function updatePhotoBorderWidth(width) {
+                const widthPx = width + 'px';
+                if (photoUploaderBox) photoUploaderBox.style.borderWidth = widthPx;
+                if (photoBorderValueSpan) photoBorderValueSpan.textContent = widthPx;
+            }
+            function updateFontSize(size) {
+                const sizePx = size + 'px';
+                const infoItems = cardElement.querySelectorAll('.info-item');
+                infoItems.forEach(item => item.style.fontSize = sizePx);
+                if (fontSizeValue) fontSizeValue.textContent = sizePx;
+            }
+            function updateFontWeight() {
+                isBold = !isBold; 
+                const labelWeight = isBold ? '700' : '500'; 
+                const valueWeight = isBold ? '900' : '600'; 
+                cardElement.querySelectorAll('.info-label').forEach(el => el.style.fontWeight = labelWeight);
+                cardElement.querySelectorAll('.info-value').forEach(el => el.style.fontWeight = valueWeight);
+                cardElement.querySelectorAll('.info-colon').forEach(el => el.style.fontWeight = valueWeight);
+                fontWeightToggle.textContent = isBold ? 'Normal' : 'Bold';
+            }
+
+            // --- ইভেন্ট লিসেনার ---
+            bgColorPicker.addEventListener('input', (e) => updateBgColor(e.target.value));
+            textColorPicker.addEventListener('input', (e) => updateTextColor(e.target.value));
+            signatureColorPicker.addEventListener('input', (e) => updateSignatureColor(e.target.value)); 
+            photoBorderColorPicker.addEventListener('input', (e) => updatePhotoBorderColor(e.target.value)); 
+            cardRadiusSlider.addEventListener('input', (e) => updateCardRadius(e.target.value)); 
+            cardPaddingSlider.addEventListener('input', (e) => updateCardPadding(e.target.value)); 
+            photoBorderSlider.addEventListener('input', (e) => updatePhotoBorderWidth(e.target.value)); 
+            fontSizeSlider.addEventListener('input', (e) => updateFontSize(e.target.value));
+            fontWeightToggle.addEventListener('click', updateFontWeight);
+            bgImageBtn.addEventListener('click', () => bgImageUploader.click());
+            bgImageUploader.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => { cardElement.style.backgroundImage = 'url(' + e.target.result + ')'; };
+                    reader.readAsDataURL(file);
+                }
+            });
+            bgImageRemoveBtn.addEventListener('click', () => {
+                cardElement.style.backgroundImage = 'none';
+                updateBgColor(bgColorPicker.value); 
+            });
+            randomDataBtn.addEventListener('click', populateRandomData);
+
+            // --- পেজ লোডে ডিফল্ট ভ্যালু সেট করা ---
+            updateBgColor(bgColorPicker.value);
+            updateTextColor(textColorPicker.value);
+            updateSignatureColor(signatureColorPicker.value); 
+            updatePhotoBorderColor(photoBorderColorPicker.value); 
+            updateCardRadius(cardRadiusSlider.value); 
+            updateCardPadding(cardPaddingSlider.value); 
+            updatePhotoBorderWidth(photoBorderSlider.value); 
+            updateFontSize(fontSizeSlider.value); 
+            
+            // --- Plain Text Paste ---
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                el.addEventListener('paste', e => {
+                    e.preventDefault();
+                    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+                    document.execCommand('insertText', false, text);
+                });
+            });
+
+            // --- Download Button ---
+            document.getElementById('download-btn-diu').addEventListener('click', () => {
+                downloadCard('diu-card', 'DIU-Style-ID-Card.png');
+            });
+
+            // --- Image Uploaders ---
+            setupImageUploader('s3-logo-uploader', 's3-logo-img', 's3-logo-box');
+            setupImageUploader('s3-photo-uploader', 's3-photo', 's3-photo-box');
+
+            // --- Set current date ---
+            const issueDateEl = document.getElementById('s3-issue-date');
+            const validTillEl = document.getElementById('s3-valid-till');
+            if (issueDateEl && validTillEl) {
+                const today = new Date();
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                const formattedDate = today.toLocaleDateString('en-GB', options);
+                issueDateEl.textContent = formattedDate; 
+                const expiryDate = new Date(today);
+                expiryDate.setFullYear(today.getFullYear() + 3); 
+                validTillEl.textContent = expiryDate.toLocaleDateString('en-GB', options);
+            }
+        });
+    </script>
+</body>
+</html>
