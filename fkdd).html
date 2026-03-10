@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fake Address Generator - Xdream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../style.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Dynamic Menu Items -->
+      </nav>
+</aside>
+<div class="overlay" id="overlay"></div>
+  
+  <main class="content">
+    <div class="card">
+      <h2>Generate Fake Address</h2>
+
+      <form id="addrForm" class="form-grid" onsubmit="return false;">
+        <label>
+          Select Country:
+          <select id="country" class="input">
+            <option value="">Loading countries…</option>
+          </select>
+        </label>
+
+        <label id="stateWrap" style="display:none;">
+          State / Province:
+          <select id="state" class="input">
+            <option value="">Loading…</option>
+          </select>
+        </label>
+
+        <button id="genBtn" class="btn grad">Generate</button>
+      </form>
+    </div>
+
+    <div id="results" class="card" style="margin-top:20px; display:none;">
+      <h2>Fake Address</h2>
+
+      <div class="addr-fields">
+        <div class="field">
+          <label>Street</label>
+          <div class="value copy-box">
+            <span id="f_street">—</span>
+            <button class="copy-btn" data-copy="#f_street">Copy</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>City</label>
+          <div class="value copy-box">
+            <span id="f_city">—</span>
+            <button class="copy-btn" data-copy="#f_city">Copy</button>
+          </div>
+        </div>
+
+        <div class="field" id="row_state" style="display:none;">
+          <label>State/Province</label>
+          <div class="value copy-box">
+            <span id="f_state">—</span>
+            <button class="copy-btn" data-copy="#f_state">Copy</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Postal Code</label>
+          <div class="value copy-box">
+            <span id="f_zip">—</span>
+            <button class="copy-btn" data-copy="#f_zip">Copy</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Country</label>
+          <div class="value copy-box">
+            <span id="f_country">—</span>
+            <button class="copy-btn" data-copy="#f_country">Copy</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Phone Code</label>
+          <div class="value copy-box">
+            <span id="f_phone">—</span>
+            <button class="copy-btn" data-copy="#f_phone">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="outbox">
+        <input id="fullAddr" class="input mono" type="text" readonly>
+        <button id="copyAll" class="btn">Copy Full Address</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Country → FakerAPI locale (partial map). Fallback: en_US
+    const COUNTRY_TO_LOCALE = {
+      "United States": "en_US","United Kingdom":"en_GB","Canada":"en_CA","Australia":"en_AU",
+      "New Zealand":"en_NZ","Ireland":"en_IE","India":"en_IN","Pakistan":"en_IN","Bangladesh":"en_US",
+      "Germany":"de_DE","Austria":"de_AT","Switzerland":"de_CH","France":"fr_FR","Belgium":"fr_BE",
+      "Netherlands":"nl_NL","Spain":"es_ES","Portugal":"pt_PT","Italy":"it_IT","Poland":"pl_PL",
+      "Czechia":"cs_CZ","Slovakia":"sk_SK","Hungary":"hu_HU","Sweden":"sv_SE","Denmark":"da_DK",
+      "Norway":"nb_NO","Finland":"fi_FI","Greece":"el_GR","Romania":"ro_RO","Ukraine":"uk_UA",
+      "Turkey":"tr_TR","Russia":"ru_RU","Japan":"ja_JP","China":"zh_CN","Brazil":"pt_BR"
+    };
+
+    const els = {
+      country:  document.getElementById('country'),
+      stateWrap:document.getElementById('stateWrap'),
+      state:    document.getElementById('state'),
+      genBtn:   document.getElementById('genBtn'),
+      results:  document.getElementById('results'),
+      street:   document.getElementById('f_street'),
+      city:     document.getElementById('f_city'),
+      stateVal: document.getElementById('f_state'),
+      zip:      document.getElementById('f_zip'),
+      countryVal:document.getElementById('f_country'),
+      phone:    document.getElementById('f_phone'),
+      rowState: document.getElementById('row_state'),
+      fullAddr: document.getElementById('fullAddr'),
+      copyAll:  document.getElementById('copyAll'),
+    };
+
+    // Tiny toast
+    function toast(msg){
+      const n=document.createElement('div');
+      n.textContent=msg;
+      Object.assign(n.style,{
+        position:'fixed',right:'12px',bottom:'12px',
+        background:'rgba(6,182,212,.2)',border:'1px solid rgba(6,182,212,.6)',
+        padding:'6px 10px',borderRadius:'8px',color:'#f1f5f9',fontSize:'.85rem',zIndex:9999
+      });
+      document.body.appendChild(n); setTimeout(()=>n.remove(),900);
+    }
+
+    // REST Countries → load list + phone code map
+    let phoneCodeByName = {};  // { countryName: "+880" }
+    async function loadCountries(){
+      try{
+        const res = await fetch('https://restcountries.com/v3.1/all?fields=name,idd');
+        const data = await res.json();
+        const items = data.map(c=>{
+          const name = c?.name?.common;
+          const root = c?.idd?.root || "";
+          const suf  = (c?.idd?.suffixes||[])[0] || "";
+          const code = (root||"") + (suf||"");
+          if (name && code) phoneCodeByName[name] = code;
+          return name;
+        }).filter(Boolean).sort((a,b)=>a.localeCompare(b));
+
+        els.country.innerHTML = '<option value="">-- Choose Country --</option>';
+        for(const name of items){
+          const opt = document.createElement('option');
+          opt.value = name; opt.textContent = name;
+          els.country.appendChild(opt);
+        }
+      }catch(e){
+        els.country.innerHTML = '<option value="">Failed to load. Try again.</option>';
+      }
+    }
+
+    // CountriesNow API → states list (if available)
+    async function loadStates(countryName){
+      els.stateWrap.style.display = 'none';
+      els.rowState.style.display = 'none';
+      els.state.innerHTML = '<option value="">Loading…</option>';
+      try{
+        const res = await fetch('https://countriesnow.space/api/v0.1/countries/states',{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ country: countryName })
+        });
+        const js = await res.json();
+        const states = js?.data?.states || [];
+        if (states.length){
+          els.state.innerHTML = '<option value="">-- Choose State/Province (optional) --</option>';
+          states.forEach(s=>{
+            const opt=document.createElement('option');
+            opt.value = s.name; opt.textContent = s.name;
+            els.state.appendChild(opt);
+          });
+          els.stateWrap.style.display = '';
+        }
+      }catch(e){
+        // ignore
+      }
+    }
+
+    // FakerAPI → address (fallback to RandomUser)
+    async function fetchAddress(countryName, stateName){
+      const locale = COUNTRY_TO_LOCALE[countryName] || 'en_US';
+      const url = `https://fakerapi.it/api/v1/addresses?_quantity=1&_locale=${encodeURIComponent(locale)}`;
+
+      async function fromFaker(){
+        const r = await fetch(url);
+        if (!r.ok) throw new Error('FakerAPI error');
+        const j = await r.json();
+        const a = j?.data?.[0] || {};
+        const streetNum  = a.buildingNumber || a.streetNumber || '';
+        const streetName = a.streetName || a.street || '';
+        const city       = a.city || a.cityName || '';
+        const zip        = a.zipcode || a.postcode || a.postalCode || '';
+        return {
+          street: [streetNum, streetName].filter(Boolean).join(' '),
+          city, zip
+        };
+      }
+
+      async function fromRandomUser(){
+        const r = await fetch('https://randomuser.me/api/');
+        const j = await r.json();
+        const l = j?.results?.[0]?.location || {};
+        const streetLine = [l?.street?.number, l?.street?.name].filter(Boolean).join(' ');
+        return {
+          street: streetLine || '',
+          city: l?.city || '',
+          zip: String(l?.postcode || '')
+        };
+      }
+
+      let addr = null;
+      try { addr = await fromFaker(); }
+      catch { addr = await fromRandomUser(); }
+
+      const phoneCode = phoneCodeByName[countryName] || '';
+      // Fill UI
+      els.street.textContent   = addr.street || '—';
+      els.city.textContent     = addr.city   || '—';
+      els.zip.textContent      = addr.zip    || '—';
+      els.countryVal.textContent = countryName || '—';
+      els.phone.textContent    = phoneCode || '—';
+
+      if (stateName){
+        els.stateVal.textContent = stateName;
+        els.rowState.style.display = '';
+      }else{
+        els.rowState.style.display = 'none';
+      }
+
+      // Full address
+      const parts = [addr.street, addr.city, stateName, countryName, addr.zip].filter(Boolean);
+      els.fullAddr.value = parts.join(', ');
+      els.results.style.display = 'block';
+    }
+
+    // Copy buttons
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const sel = btn.getAttribute('data-copy');
+      const el = document.querySelector(sel);
+      const text = el ? (el.value ?? el.textContent ?? '') : '';
+      if (text) navigator.clipboard.writeText(text).then(()=>toast('Copied'));
+    });
+    els.copyAll.addEventListener('click', ()=> {
+      if (els.fullAddr.value) navigator.clipboard.writeText(els.fullAddr.value).then(()=>toast('Copied'));
+    });
+
+    // Events
+    els.country.addEventListener('change', ()=>{
+      const c = els.country.value;
+      if (!c){ els.stateWrap.style.display='none'; return; }
+      loadStates(c);
+    });
+
+    els.genBtn.addEventListener('click', async ()=>{
+      const c = els.country.value;
+      if (!c){ alert('Please select a country'); return; }
+      const s = els.stateWrap.style.display !== 'none' ? els.state.value : '';
+      els.genBtn.disabled = true; els.genBtn.textContent = 'Generating…';
+      try{
+        await fetchAddress(c, s);
+      }catch(e){
+        alert('Failed to generate address. Try again.');
+      }finally{
+        els.genBtn.disabled = false; els.genBtn.textContent = 'Generate';
+      }
+    });
+
+    // init
+    loadCountries();
+  </script>
+  <script src="../script.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"f48f42cdaf9b4df59cc81f31364c86c4","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
